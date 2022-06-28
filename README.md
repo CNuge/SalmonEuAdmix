@@ -27,4 +27,6 @@ TODO - fill
     -make sure the tflite and regular agree (TODO)
     -sub out the requirements and try to eliminate the tensorflow dependency
         ^go back to paper repo, and sub in the finished product. (see desktop for starting code)
+        - keep just one or the other
+- silence any tf command line warnings
 -cleanup / eliminate the main sections of module files (these are start of unit tests)

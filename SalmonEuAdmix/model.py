@@ -93,10 +93,11 @@ def load_lite_dnn(dnn_file_tflite):
     tf_lite_model.reset_all_variables()
     return tf_lite_model
 
+
 if __name__ == '__main__':
 
-
     print("TODO - change this to functions and make it reusable, cleanup this section when done")    
+    print(" decide if I need all the model code, I think good to include for posterity even if bloat")
     dpath = "data/"
 
     #load the scalers    
