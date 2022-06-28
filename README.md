@@ -22,3 +22,8 @@ TODO - fill
 - add travis.ci to display the unit tests.
 - run install test and make sure the predictions are what is expected.
     ^pull lines from the paper results corresponding to the fish in the example file, make sure the predictions match.
+- make a shrunken version of the DNN
+    -convert to tflite
+    -make sure the tflite and regular agree
+    -sub out the requirements and try to eliminate the tensorflow dependency
+        ^go back to paper repo, and sub in the finished product. (see desktop for starting code)
