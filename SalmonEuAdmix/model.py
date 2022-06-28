@@ -5,7 +5,6 @@ import pandas as pd
 
 from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
-
 from sklearn.preprocessing import StandardScaler
 
 
@@ -33,6 +32,9 @@ def make_dnn_regressor(in_shape = 10,
                     metrics=['mean_absolute_error'])
 
     return model
+
+
+
 
 
 if __name__ == '__main__':

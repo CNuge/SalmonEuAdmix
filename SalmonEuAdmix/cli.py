@@ -1,12 +1,11 @@
 import sys
+import pickle
 import argparse
 import numpy as np
 
-import pickle
-from SalmonEuAdmix.encode import readPedMap_tsv_fmt, encode_ped
+from SalmonEuAdmix.encode import readPedMap_tsv_fmt, encode_ped, get_model_inputs
 
-print("TODO - add instantiation of these to the setup.py file")
-from SalmonEuAdmix import allele_info, regression_dnn, x_scaler, y_scaler
+from SalmonEuAdmix import allele_info, panel_snps, panel_dnn, x_scaler, y_scaler
 
 def input_parser(args):
     parser  = argparse.ArgumentParser(prog = "SalmonEuAdmix",
@@ -25,7 +24,6 @@ def input_parser(args):
     return parser.parse_args(args)
 
 
-
 def main():
 
     parsed_args = input_parser(sys.argv[1:])
@@ -33,7 +31,7 @@ def main():
     ped_file = parsed_args.ped
     map_file = parsed_args.map
     out_file = parsed_args.out
-
+    panel_snps = list(allele_info.keys())
 
     if ped_file == None:
         raise ValueError("must specify an input ped file with the flag -p")
@@ -44,17 +42,29 @@ def main():
     #load the ped file & map file using code in encode
     snp_data, snp_columns = readPedMap_tsv_fmt(ped_file, map_file)
 
-    #encode the data
+    if len(snp_columns) < 513:
+        raise ValueError("input ped file must contain the 513 snps of the marker panel. see: panel_513_data.map for list")
+    elif len(snp_columns) > 513:
+        snp_data = subset_snp_df(snp_data, panel_snps)
 
-    #load the model
+    #encode the data
+    snp_data, _ = encode_ped(snp_data, snp_columns, encoding_dict = allele_info)
+
+    #get the ml inputs
+    test_X, _ = get_model_inputs(snp_data, panel_snps)
 
     #make predictions with the model
+    test_yht_raw = panel_dnn.predict(test_X)
+
+    #use y scaler to transform the outputs
+    test_yht = y_scaler.inverse_transform(test_yht_raw)
 
     #build the output dataframe
+    out_df = pd.DataFrame({'individual' : snp_data['individual']})
+    out_df['EuAdmix_Proportion'] = test_yht
 
     #save data to the outfile
-
-
+    out_df.to_csv(out_file, sep = '\t', index = False)
 
 
 if __name__ == '__main__':

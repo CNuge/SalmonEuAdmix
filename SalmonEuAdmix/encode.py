@@ -2,6 +2,8 @@ import pickle
 import numpy as np
 import pandas as pd
 
+from SalmonEuAdmix import allele_info, x_scaler, y_scaler
+
 def readPedMap_tsv_fmt(ped_file, map_file = "", headers = False):
     
     col_names = ["chromosome", "snp" , "genetic_distance", "physical_distance"]
@@ -130,14 +132,25 @@ def encode_ped(snp_data, snp_columns, get_alleles = False, encoding_dict = None)
         return snp_data, None
 
 
-
 #snp_df = extra_snp_data
 #subset_list = list(allele_info.keys())
 def subset_snp_df(snp_df, subset_list):
     return snp_df[subset_list]
 
-if __name__ == '__main__':
 
+#df = train_df
+def get_model_inputs(df, x_cols, y_col = None, X_transform = True, y_transform = True):
+    """ """
+    x_out = np.array(list(df[x_cols].values))
+    #get the y values
+    if y_col is None:
+        y_out = None
+    else:
+        y_out = df[y_col].values
+    return x_out, y_out
+
+
+if __name__ == '__main__':
 
     dpath = "data/"
 
@@ -151,18 +164,14 @@ if __name__ == '__main__':
 
     extra_ped_file = dpath+'unit_test2.ped'
     extra_map_file = dpath+'unit_test2.map'
-
     extra_snp_data, extra_snp_columns = readPedMap_tsv_fmt(extra_ped_file, extra_map_file)
 
-
     assert len(snp_columns) == 513
+    assert len(extra_snp_columns) > 513
 
-    assert len(extra_snp_columns) > 513:
-        extra_snp_data = subset_snp_df(extra_snp_data, list(allele_info.keys()))
-        assert len(extra_snp_columns) == 513
+    extra_snp_data = subset_snp_df(extra_snp_data, list(allele_info.keys()))
+    assert len(extra_snp_columns) == 513
 
-
-    snp_data, snp_columns = readPedMap_tsv_fmt(ped_file, map_file)
     snp_data, _ = encode_ped(snp_data, snp_columns, encoding_dict = allele_info)
 
     """
@@ -175,12 +184,4 @@ if __name__ == '__main__':
     assert len(allele_info.keys()) == len(snp_columns)
 
     """
-    #save the allele encoding information for reuse
-    pickle.dump(allele_info, open(dpath+'pred_model/SNP_major_minor_info.pkl', "wb"))
-
-    meta_df['individual'] = meta_df['fish_id'].values
-
-    all_shared = pd.merge(meta_df, snp_data, how = 'inner')
-
-    all_shared.to_csv(dpath+"encoded_snp_panel_with_metadata.tsv", sep = '\t', index=False)
 
