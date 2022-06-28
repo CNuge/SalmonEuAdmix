@@ -2,7 +2,8 @@ import pickle
 import numpy as np
 import pandas as pd
 
-from SalmonEuAdmix import allele_info, x_scaler, y_scaler
+from SalmonEuAdmix import panel_snps
+
 
 def readPedMap_tsv_fmt(ped_file, map_file = "", headers = False):
     
@@ -139,14 +140,22 @@ def subset_snp_df(snp_df, subset_list):
 
 
 #df = train_df
-def get_model_inputs(df, x_cols, y_col = None, X_transform = True, y_transform = True):
+def get_model_inputs(df, x_cols = panel_snps, y_col = None, x_scaler = None, y_scaler = None):
     """ """
+    #get the x values
     x_out = np.array(list(df[x_cols].values))
+    #if an X scaler is passed, transform the X values using it
+    if x_scaler is not None:
+        x_out = x_scaler.transform(x_out)
     #get the y values
     if y_col is None:
         y_out = None
     else:
         y_out = df[y_col].values
+        #if a y scaler is passed and there are y values, transform the y values using it
+        if y_scaler is not None:
+            y_out = y_scaler.transform(np.expand_dims(y_out, axis=1))
+            y_out = np.squeeze(y_out)
     return x_out, y_out
 
 

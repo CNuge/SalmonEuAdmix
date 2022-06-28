@@ -61,7 +61,6 @@ if __name__ == '__main__':
     test_yht = y_scaler.inverse_transform(test_yht_raw)
 
 
-
     print("code to make it a tsv output, with the sample IDs and admixture percs")
 
     test_df = pd.DataFrame()

@@ -5,7 +5,7 @@ SalmonEuAdmix: a machine learning-based library for estimating European admixtur
 Data and models
 ==========
 
-TODO - add description here
+TODO - add descriptions here
 """
 
 
