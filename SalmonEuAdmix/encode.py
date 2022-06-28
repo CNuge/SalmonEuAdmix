@@ -129,3 +129,44 @@ def encode_ped(snp_data, snp_columns, get_alleles = False, encoding_dict = None)
             snp_data[x], _ = dosage_encode_snps(snp_data[x].values)
         return snp_data, None
 
+
+
+if __name__ == '__main__':
+
+    print("TODO:")
+    print("import the major and minor data")
+    print("use the code below to build the unit tests")
+
+    dpath = "data/"
+
+    ped_file = dpath+'panel_snp_513_set.ped'
+    map_file = dpath+'panel_snp_513_set.map'
+
+    meta_data = dpath+'panel_data_admix_vals.tsv'
+    meta_df = pd.read_csv(meta_data, sep = '\t')
+
+    snp_data, snp_columns = readPedMap_tsv_fmt(ped_file, map_file)
+
+    assert len(snp_columns) == 513
+
+    snp_data, allele_info = encode_ped(snp_data, snp_columns, get_alleles = True)
+
+    assert len(allele_info.keys()) == len(snp_columns)
+    """
+    test the other methods
+    snp_data, snp_columns = readPedMap_tsv_fmt(ped_file, map_file)
+    snp_data, _ = encode_ped(snp_data, snp_columns, encoding_dict = allele_info)
+
+    snp_data, snp_columns = readPedMap_tsv_fmt(ped_file, map_file)
+    snp_data, _ = encode_ped(snp_data, snp_columns)
+
+    """
+    #save the allele encoding information for reuse
+    pickle.dump(allele_info, open(dpath+'pred_model/SNP_major_minor_info.pkl', "wb"))
+
+    meta_df['individual'] = meta_df['fish_id'].values
+
+    all_shared = pd.merge(meta_df, snp_data, how = 'inner')
+
+    all_shared.to_csv(dpath+"encoded_snp_panel_with_metadata.tsv", sep = '\t', index=False)
+
