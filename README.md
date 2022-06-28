@@ -1,4 +1,4 @@
-#SalmonEuAdmix
+# SalmonEuAdmix
 ## A machine learning-based library for estimating European admixture proportions in Atlantic salmon
 
 ### detailed description here, copy into setup.py

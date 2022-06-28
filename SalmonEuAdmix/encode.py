@@ -131,34 +131,48 @@ def encode_ped(snp_data, snp_columns, get_alleles = False, encoding_dict = None)
 
 
 
+#snp_df = extra_snp_data
+#subset_list = list(allele_info.keys())
+def subset_snp_df(snp_df, subset_list):
+    return snp_df[subset_list]
+
 if __name__ == '__main__':
 
-    print("TODO:")
-    print("import the major and minor data")
-    print("use the code below to build the unit tests")
 
     dpath = "data/"
 
-    ped_file = dpath+'panel_snp_513_set.ped'
-    map_file = dpath+'panel_snp_513_set.map'
+    allele_info = pickle.load(open(dpath+"SNP_major_minor_info.pkl", "rb"))
 
-    meta_data = dpath+'panel_data_admix_vals.tsv'
-    meta_df = pd.read_csv(meta_data, sep = '\t')
-
+    ped_file = dpath+'panel_513_data.ped'
+    map_file = dpath+'panel_513_data.map'
     snp_data, snp_columns = readPedMap_tsv_fmt(ped_file, map_file)
+
+    assert snp_columns == list(allele_info.keys()) #can use this for subsetting a bigger ped
+
+    extra_ped_file = dpath+'unit_test2.ped'
+    extra_map_file = dpath+'unit_test2.map'
+
+    extra_snp_data, extra_snp_columns = readPedMap_tsv_fmt(extra_ped_file, extra_map_file)
+
 
     assert len(snp_columns) == 513
 
-    snp_data, allele_info = encode_ped(snp_data, snp_columns, get_alleles = True)
+    assert len(extra_snp_columns) > 513:
+        extra_snp_data = subset_snp_df(extra_snp_data, list(allele_info.keys()))
+        assert len(extra_snp_columns) == 513
 
-    assert len(allele_info.keys()) == len(snp_columns)
-    """
-    test the other methods
+
     snp_data, snp_columns = readPedMap_tsv_fmt(ped_file, map_file)
     snp_data, _ = encode_ped(snp_data, snp_columns, encoding_dict = allele_info)
 
+    """
+    test the other methods
+
     snp_data, snp_columns = readPedMap_tsv_fmt(ped_file, map_file)
     snp_data, _ = encode_ped(snp_data, snp_columns)
+
+    snp_data, allele_info = encode_ped(snp_data, snp_columns, get_alleles = True)
+    assert len(allele_info.keys()) == len(snp_columns)
 
     """
     #save the allele encoding information for reuse

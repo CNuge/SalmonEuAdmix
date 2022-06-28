@@ -38,11 +38,11 @@ def make_dnn_regressor(in_shape = 10,
 if __name__ == '__main__':
 
 
-	print("TODO - change this to functions and make it reusable")    
-	dpath = "data/"
+    print("TODO - change this to functions and make it reusable")    
+    dpath = "data/"
 
-	#load the scalers	
-	x_scaler = pickle.load(open(dpath+"X_scaler_v1", "rb"))
+    #load the scalers    
+    x_scaler = pickle.load(open(dpath+"X_scaler_v1", "rb"))
     y_scaler = pickle.load(open(outpath+"y_scaler_v1", "rb"))
 
     #transform the inputs
@@ -52,7 +52,7 @@ if __name__ == '__main__':
     #load the model
     regr = pickle.load(open(dpath+"DNNregressor_model_v1", "rb"))
   
-  	#predict on the inputs
+    #predict on the inputs
     test_yht_raw = regr.predict(test_X)
 
     #use y scaler to transform the outputs
@@ -62,6 +62,6 @@ if __name__ == '__main__':
 
     print("code to make it a tsv output, with the sample IDs and admixture percs")
 
-	test_df = pd.DataFrame()
+    test_df = pd.DataFrame()
     test_df['DNN_predictions'] = test_yht
     test_df.to_csv(outpath+"DNN_predictions_test_samples.tsv", sep = '\t', index = False)
