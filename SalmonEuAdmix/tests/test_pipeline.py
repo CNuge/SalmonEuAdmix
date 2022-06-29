@@ -2,7 +2,7 @@ import os
 import pytest
 
 from SalmonEuAdmix import allele_info, panel_snps
-from SalmonEuAdmix.model import load_y_scaler, load_x_scaler, load_dnn, load_lite_dnn
+from SalmonEuAdmix.model import load_y_scaler, load_x_scaler, load_dnn 
 from SalmonEuAdmix.encode import readPedMap_tsv_fmt, encode_ped, get_model_inputs, subset_snp_df
 
 
@@ -36,7 +36,10 @@ def test_ReadAndPredict():
     #use y scaler to transform the outputs
     test_yht = y_scaler.inverse_transform(test_yht_raw)
 
-    #Sand_12_* are Norwegian fish, so we expect 100%
+    # Sand_12_* are Norwegian fish, so we expect 100% Nor admixture pred for 
+    # fish 10 - 17. Checking against rounded values to avoid floating point nuances
+    # influencing the unit tests.
     rounded_yht = [int(x) for x in test_yht]
-
     expected_preds = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0]
+
+    assert rounded_yht == expected_preds

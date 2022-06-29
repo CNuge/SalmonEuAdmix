@@ -106,14 +106,15 @@ def dosage_encode_snps(snp_arr, missing_val = "0 0", replace_missing_method = "m
 def encode_ped(snp_data, snp_columns, get_alleles = False, encoding_dict = None):
     """ Take a string format PED and turn it into dosage encoding."""
 
+    snp_data = snp_data.copy()
+    
     #encode with known major and minor alleles
     if encoding_dict is not None:
-        #x = snp_columns[3]
+        #x = snp_columns[5]
         for x in snp_columns:
             pq_info = encoding_dict[x]
             #print(x)
             snp_data[x], _ = dosage_encode_snps(snp_data[x].values, known_pq = pq_info)
-
         return snp_data, None
 
     #calculate major and minor alleles from scratch, encode and return the major and minor dictonary

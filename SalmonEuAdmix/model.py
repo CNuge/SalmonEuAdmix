@@ -3,10 +3,10 @@ import pickle
 import numpy as np
 import pandas as pd
 import tensorflow as tf  
-from tensorflow import lite
 
 from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
+
 
 def make_dnn_regressor(in_shape = 10, 
                         hidden_sizes = [24,48,96,192,96,48,24,12], 
@@ -35,67 +35,6 @@ def make_dnn_regressor(in_shape = 10,
     return model
 
 
-def save_model_with_signatures(trained_model_dir, output_dir):
-    """
-    Save model with signatures
-    :param trained_model_dir (str): path to saved model after training
-    :param output_dir (str): path to save model with signatures
-    Returns 
-    None
-    """
-    model = build_onoff_rnn(load_weights=trained_model_dir)
-    run_model = tf.function(lambda x: model(x))
-    
-    BATCH_SIZE = 1
-    STEPS = 21
-    INPUT_SIZE = 5
-    
-    concrete_func = run_model.get_concrete_function(
-        tf.TensorSpec([BATCH_SIZE, STEPS, INPUT_SIZE], model.inputs[0].dtype))
-    
-    model.save(output_dir, save_format="tf", signatures=concrete_func)
-    return None
-
-
-def convert_to_tflite_format(model_dir, lite_model_name):
-    """
-    Code for converting from tf to tflite, included for posterity.
-
-    Convert full precision model to tflite format 
-    :param model_dir (str) : path where model with signatures was saved
-    :param lite_model_name (str) : filename of tflite model
-    Returns: 
-    None
-    """
-    converter = tf.lite.TFLiteConverter.from_saved_model(model_dir)
-    tflite_quant_model = converter.convert() 
-    with open(lite_model_name, 'wb') as f:
-        f.write(tflite_quant_model)
-    return None
-
-
-class Predictor(lite.Interpreter):
-    def load_model_details(self):
-        self.allocate_tensors()
-        self.input_details = self.get_input_details()
-        self.output_details = self.get_output_details()
-    
-    def predict(self, input):
-        print('input shape', input.shape)
-        self.set_tensor(self.input_details[0]["index"], np.array([input], dtype=np.float32))
-        self.invoke()
-        output_data = self.get_tensor(self.output_details[0]["index"])
-        return np.argmax(output_data)
-
-
-def build_lite_dnn(dnn_file_tflite):
-    """Use the tensorflow lite code to construct the model."""
-    tf_lite_model = Predictor(dnn_file_tflite)
-    tf_lite_model.load_model_details()
-    tf_lite_model.reset_all_variables()
-    return tf_lite_model
-
-
 def load_x_scaler():
     """Load the X scaler used to prep data for the model input"""
     location = os.path.dirname(os.path.realpath(__file__))
@@ -114,15 +53,6 @@ def load_y_scaler():
     return y_scaler
 
 
-def load_lite_dnn():
-    """Load the tensorflow lite version of the model"""
-    location = os.path.dirname(os.path.realpath(__file__))
-    dnn_file_tflite = os.path.join(location, 'data', 'panel_dnn_tflite')
-    panel_dnn = build_lite_dnn(dnn_file_tflite)
-
-    return panel_dnn
-
-
 def load_dnn():
     """Load the tensorflow lite version of the model"""
     location = os.path.dirname(os.path.realpath(__file__))
@@ -131,13 +61,6 @@ def load_dnn():
 
     return panel_dnn
 
-
-def bulk_predict(model, X_matrix):
-    output = []
-    for x in X_matrix:
-        y_val = model.predict(x)
-        output.append(y_val)
-    return output
 
 
 if __name__ == '__main__':
@@ -169,4 +92,3 @@ if __name__ == '__main__':
     test_df['DNN_predictions'] = test_yht
     test_df.to_csv(outpath+"DNN_predictions_test_samples.tsv", sep = '\t', index = False)
 
-    tf_lite_file = dpath+"panel_dnn_tflite"

@@ -1,0 +1,3 @@
+[console_scripts]
+SalmonEuAdmix = SalmonEuAdmix.cli:main
+

@@ -1,0 +1,17 @@
+Metadata-Version: 2.1
+Name: SalmonEuAdmix
+Version: 1.0.0
+Summary: Estimating European admixture proportions in Atlantic salmon
+Home-page: https://github.com/CNuge/SalmonEuAdmix
+Author: Cam Nugent
+Author-email: Cameron.Nugent@dfo-mpo.gc.ca
+License: LICENSE.md
+Platform: UNKNOWN
+Requires-Python: >=3.9.7
+
+
+SalmonEuAdmix: a machine learning-based library for estimating European admixture proportions in Atlantic salmon. 
+
+TODO - Add a detailed description here.
+
+

@@ -22,12 +22,19 @@ TODO - fill
 - add travis.ci to display the unit tests.
 - run install test and make sure the predictions are what is expected.
     ^pull lines from the paper results corresponding to the fish in the example file, make sure the predictions match.
-- [x] make a shrunken version of the DNN
-    -[x] convert the DNN to tflite to make it smaller
-    -make sure the tflite and regular agree (TODO)
-    -sub out the requirements and try to eliminate the tensorflow dependency
-        ^go back to paper repo, and sub in the finished product. (see desktop for starting code)
-        - keep just one or the other
-            - If using the tflite, need to add an iterative predict function. It won't bulk predict on a matrix of multiple inputs
+
+- I've killed the tflite, it complicates the code far too much for the few mb size savings
+    - [x] make a shrunken version of the DNN
+        -[x] convert the DNN to tflite to make it smaller
+        -make sure the tflite and regular agree (TODO)
+        -sub out the requirements and try to eliminate the tensorflow dependency
+            ^go back to paper repo, and sub in the finished product. (see desktop for starting code)
+            - keep just one or the other
+                - If using the tflite, need to add an iterative predict function. It won't bulk predict on a matrix of multiple inputs
 - silence any tf command line warnings
 -cleanup / eliminate the main sections of module files (these are start of unit tests)
+
+
+- the admixture predictons from the DNN do go about 1.0 at times
+    ^should I add a mask to the outputs? i.e. if >1.0: return 1.0
+    ^could have this as a flag in the outputs
