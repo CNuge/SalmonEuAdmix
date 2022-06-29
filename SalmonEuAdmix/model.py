@@ -12,6 +12,7 @@ def make_dnn_regressor(in_shape = 10,
                         hidden_sizes = [24,48,96,192,96,48,24,12], 
                         dropout = 0.2):
 
+    """ Code for constructing the dnn regressor, included for posterity/reference."""
     #initiate the model
     model = Sequential()
     #specify the in layer, denoting size
@@ -58,6 +59,8 @@ def save_model_with_signatures(trained_model_dir, output_dir):
 
 def convert_to_tflite_format(model_dir, lite_model_name):
     """
+    Code for converting from tf to tflite, included for posterity.
+
     Convert full precision model to tflite format 
     :param model_dir (str) : path where model with signatures was saved
     :param lite_model_name (str) : filename of tflite model
@@ -111,7 +114,7 @@ def load_y_scaler():
     return y_scaler
 
 
-def load_dnn():
+def load_lite_dnn():
     """Load the tensorflow lite version of the model"""
     location = os.path.dirname(os.path.realpath(__file__))
     dnn_file_tflite = os.path.join(location, 'data', 'panel_dnn_tflite')
@@ -120,10 +123,24 @@ def load_dnn():
     return panel_dnn
 
 
+def load_dnn():
+    """Load the tensorflow lite version of the model"""
+    location = os.path.dirname(os.path.realpath(__file__))
+    dnn_file = os.path.join(location, 'data', 'DNNregressor_model_v1')
+    panel_dnn = pickle.load(open(dnn_file, "rb"))
+
+    return panel_dnn
+
+
+def bulk_predict(model, X_matrix):
+    output = []
+    for x in X_matrix:
+        y_val = model.predict(x)
+        output.append(y_val)
+    return output
 
 
 if __name__ == '__main__':
-
     print("TODO - change this to functions and make it reusable, cleanup this section when done")    
     print(" decide if I need all the model code, I think good to include for posterity even if bloat")
     dpath = "data/"
