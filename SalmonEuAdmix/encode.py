@@ -33,7 +33,7 @@ def readPedMap_tsv_fmt(ped_file, map_file = "", headers = False):
 
 
 def get_unique_alleles(gt_count_dict):
-    """Determine the major and minor alleles for the given marker."""
+    """Determine the major and minor alleles for the given SNP marker."""
     unique_alleles = {}
     for x in gt_count_dict.keys():
         for a in x.split(" "):
@@ -53,7 +53,9 @@ def get_unique_alleles(gt_count_dict):
 
 
 def calc_mode(snp_arr):
-    """get the most common value in the array of SNP values. For imputing missing info"""
+    """Get the most common value in the array of SNP values. 
+    
+    Used for imputing missing info."""
     vals, counts = np.unique(snp_arr, return_counts=True)
     index = np.argmax(counts)
     return vals[index]
@@ -66,7 +68,7 @@ def calc_mode(snp_arr):
 #' missing_data - can put in the mode or NA
 def dosage_encode_snps(snp_arr, missing_val = "0 0", replace_missing_method = "mode", 
                             record_snps = False, known_pq = False):
-
+    """"""
     if replace_missing_method == "mode" :
         mode_gt = calc_mode(snp_arr)
         if mode_gt == missing_val:
@@ -135,9 +137,16 @@ def encode_ped(snp_data, snp_columns, get_alleles = False, encoding_dict = None)
 
 #snp_df = extra_snp_data
 #subset_list = list(allele_info.keys())
-def subset_snp_df(snp_df, subset_list):
-    return snp_df[subset_list]
-
+def subset_snp_df(snp_df, subset_list, leading_cols = False):
+    """Take a dataframe of SNPs, subset only the columns for the list of SNPs provided.
+    
+    Option to include the header data (default = False)."""
+    if leading_cols == False:
+        return snp_df[subset_list]
+    if leading_cols == True:
+        header_data = ['#family', 'individual', 'sire', 'dam', 'sex', 'pheno']
+        sub_merged = header_data + subset_list
+        return snp_df[sub_merged]
 
 #df = train_df
 def get_model_inputs(df, x_cols = panel_snps, y_col = None, x_scaler = None, y_scaler = None):
