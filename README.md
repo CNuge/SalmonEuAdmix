@@ -4,21 +4,34 @@
 ### detailed description here, copy into setup.py
 
 ## Installation
-TODO - fill
 
+```
+create the release:
+python setup.py sdist
+install the release:
+python3 setup.py install
+
+#then check from home dir if the package works with
+SalmonEuAdmix -h
+```
 
 ## Usage 
 ### Command line interface
-TODO - fill
+
+get the help menu
+```
+SalmonEuAdmix -h
+```
+
 
 
 ## TODO
 - add documentation to all functions
+- add liscence
 - add unit tests to cover the functions
 - add description of how to install and use the model
 - verbose documents for the argument parser.
-- test the install and execution
-    - make sure requirements work as expected
+- add a header == true or false line to the PED parser
 - add travis.ci to display the unit tests.
 - run install test and make sure the predictions are what is expected.
     ^pull lines from the paper results corresponding to the fish in the example file, make sure the predictions match.
@@ -32,9 +45,8 @@ TODO - fill
             - keep just one or the other
                 - If using the tflite, need to add an iterative predict function. It won't bulk predict on a matrix of multiple inputs
 - silence any tf command line warnings
--cleanup / eliminate the main sections of module files (these are start of unit tests)
-
-
-- the admixture predictons from the DNN do go about 1.0 at times
-    ^should I add a mask to the outputs? i.e. if >1.0: return 1.0
-    ^could have this as a flag in the outputs
+- cleanup / eliminate the main sections of module files (these are start of unit tests)
+- *IMPORTANT ADD*
+    - add the mode values to the SNP_major_minor_info.pkl?
+        - want the imputation based on the training data, not based off of the new data
+            - could have a param added to enable either.

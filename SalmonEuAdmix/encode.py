@@ -106,6 +106,8 @@ def dosage_encode_snps(snp_arr, missing_val = "0 0", replace_missing_method = "m
 def encode_ped(snp_data, snp_columns, get_alleles = False, encoding_dict = None):
     """ Take a string format PED and turn it into dosage encoding."""
 
+    #make a copy of the input so that its not overriding the original, also prevents 
+    #the pandas CopyWarning flag
     snp_data = snp_data.copy()
     
     #encode with known major and minor alleles

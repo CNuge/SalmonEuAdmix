@@ -2,7 +2,6 @@ import os
 import pickle
 import numpy as np
 import pandas as pd
-import tensorflow as tf  
 
 from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
@@ -61,6 +60,14 @@ def load_dnn():
 
     return panel_dnn
 
+
+def mask_outside_limits(prediction_array):
+    for i, x in enumerate(prediction_array):
+        if x > 1.0:
+            prediction_array[i] = 1.0
+        elif x < 0.0:
+            prediction_array[i] = 0.0
+    return prediction_array
 
 
 if __name__ == '__main__':
