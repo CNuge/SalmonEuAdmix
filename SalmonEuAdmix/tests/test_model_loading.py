@@ -1,5 +1,3 @@
-import os
-import pytest
 import numpy as np
 import tensorflow as tf
 from SalmonEuAdmix.model import load_y_scaler, load_x_scaler, load_dnn

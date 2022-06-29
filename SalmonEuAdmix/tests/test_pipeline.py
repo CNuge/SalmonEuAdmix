@@ -1,7 +1,3 @@
-import os
-import pytest
-
-
 from SalmonEuAdmix import allele_info, panel_snps
 from SalmonEuAdmix.model import load_y_scaler, load_x_scaler, load_dnn 
 from SalmonEuAdmix.encode import readPedMap_tsv_fmt, encode_ped, get_model_inputs, subset_snp_df

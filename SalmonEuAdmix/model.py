@@ -1,7 +1,5 @@
 import os
 import pickle
-import numpy as np
-import pandas as pd
 
 from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
@@ -10,8 +8,16 @@ from tensorflow.keras.models import Sequential
 def make_dnn_regressor(in_shape = 10, 
                         hidden_sizes = [24,48,96,192,96,48,24,12], 
                         dropout = 0.2):
+    """Code for constructing the dnn regressor, included for posterity/reference.
 
-    """ Code for constructing the dnn regressor, included for posterity/reference."""
+    Args:
+        in_shape (int, optional): _description_. Defaults to 10.
+        hidden_sizes (list, optional): _description_. Defaults to [24,48,96,192,96,48,24,12].
+        dropout (float, optional): _description_. Defaults to 0.2.
+
+    Returns:
+        _type_: _description_
+    """
     #initiate the model
     model = Sequential()
     #specify the in layer, denoting size
@@ -62,6 +68,14 @@ def load_dnn():
 
 
 def mask_outside_limits(prediction_array):
+    """_summary_
+
+    Args:
+        prediction_array (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """    
     for i, x in enumerate(prediction_array):
         if x > 1.0:
             prediction_array[i] = 1.0
@@ -69,33 +83,4 @@ def mask_outside_limits(prediction_array):
             prediction_array[i] = 0.0
     return prediction_array
 
-
-if __name__ == '__main__':
-    print("TODO - change this to functions and make it reusable, cleanup this section when done")    
-    print(" decide if I need all the model code, I think good to include for posterity even if bloat")
-    dpath = "data/"
-
-    #load the scalers    
-    x_scaler = pickle.load(open(dpath+"X_scaler_v1", "rb"))
-    y_scaler = pickle.load(open(outpath+"y_scaler_v1", "rb"))
-
-    #transform the inputs
-    test_X = x_scaler.transform(test_X_raw)
-
-
-    #load the model
-    regr = pickle.load(open(dpath+"DNNregressor_model_v1", "rb"))
-  
-    #predict on the inputs
-    test_yht_raw = regr.predict(test_X)
-
-    #use y scaler to transform the outputs
-    test_yht = y_scaler.inverse_transform(test_yht_raw)
-
-
-    print("code to make it a tsv output, with the sample IDs and admixture percs")
-
-    test_df = pd.DataFrame()
-    test_df['DNN_predictions'] = test_yht
-    test_df.to_csv(outpath+"DNN_predictions_test_samples.tsv", sep = '\t', index = False)
 

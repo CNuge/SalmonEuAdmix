@@ -64,14 +64,13 @@ SalmonEuAdmix can handle low levels
 
 ## TODO
 - add documentation to all functions
-- add unit tests to cover the functions
-- add description of how to install and use the model
+    - need to fill in the docstrings
+    - verbose typing of outputs?
+- add a license
+- make sure unit tests cover all the functions
 - verbose documents for the argument parser.
 - add a header == true or false line to the PED parser
 - add travis.ci to display the unit tests.
-- run install test and make sure the predictions are what is expected.
-    ^pull lines from the paper results corresponding to the fish in the example file, make sure the predictions match.
-
 - I've killed the tflite, it complicates the code far too much for the few mb size savings
     - [x] make a shrunken version of the DNN
         -[x] convert the DNN to tflite to make it smaller
@@ -87,3 +86,4 @@ SalmonEuAdmix can handle low levels
         - want the imputation based on the training data, not based off of the new data
             - could have a param added to enable either.
 - make it pip installable?
+- lint the code to get you spacing and formatting pretty and proper

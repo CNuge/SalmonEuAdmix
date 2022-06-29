@@ -1,6 +1,3 @@
-import os
-import pytest
-
 from SalmonEuAdmix import allele_info, panel_snps
 from SalmonEuAdmix.encode import readPedMap_tsv_fmt, subset_snp_df, encode_ped
 
