@@ -1,7 +1,10 @@
 import sys
 import argparse
 
-from SalmonEuAdmix import allele_info, panel_snps, panel_dnn, x_scaler, y_scaler
+#from SalmonEuAdmix import panel_dnn, x_scaler, y_scaler
+
+#from SalmonEuAdmix import allele_info, panel_snps, panel_dnn, x_scaler, y_scaler
+from SalmonEuAdmix.model import load_y_scaler, load_x_scaler, load_dnn
 from SalmonEuAdmix.encode import readPedMap_tsv_fmt, encode_ped, get_model_inputs
 
 def input_parser(args):
@@ -22,7 +25,12 @@ def input_parser(args):
 
 
 def main():
-	#parse the command line inputs
+	
+    panel_dnn = load_dnn()
+    x_scaler = load_x_scaler()
+    y_scaler = load_y_scaler()
+    
+    #parse the command line inputs
     parsed_args = input_parser(sys.argv[1:])
     ped_file = parsed_args.ped
     map_file = parsed_args.map
