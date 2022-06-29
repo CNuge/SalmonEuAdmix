@@ -68,13 +68,13 @@ def load_dnn():
 
 
 def mask_outside_limits(prediction_array):
-    """_summary_
+    """ Constrain the predictions to true proportions (between 0 and 1).
 
     Args:
-        prediction_array (_type_): _description_
+        prediction_array (list or numpy.array): a set of predictions
 
     Returns:
-        _type_: _description_
+        list or numpy.array: format will match that of the input
     """    
     for i, x in enumerate(prediction_array):
         if x > 1.0:
