@@ -3,7 +3,8 @@ from SalmonEuAdmix.encode import readPedMap_tsv_fmt, subset_snp_df, encode_ped
 
 
 def test_AlleleInfo():
-
+    """ Test for the data structures in the package.
+    """    
     assert len(allele_info.keys()) == 513
     assert len(panel_snps) == 513
 
@@ -12,7 +13,8 @@ def test_AlleleInfo():
 
 
 def test_PedMapReadAndTrim():
-
+    """Test that the data are read in, and the marker panels are pulled and used.
+    """
     std_ped_file = 'SalmonEuAdmix/data/panel_513_data.ped'
     std_map_file = 'SalmonEuAdmix/data/panel_513_data.map'
 
@@ -39,7 +41,8 @@ def test_PedMapReadAndTrim():
 
 
 def test_ReadAndEncode():
-    
+    """Test the encoding of the data frame
+    """        
     extra_ped_file = 'SalmonEuAdmix/data/unit_test2.ped'
     extra_map_file = 'SalmonEuAdmix/data/unit_test2.map'
 
@@ -52,3 +55,7 @@ def test_ReadAndEncode():
 
     snp_data, _ = encode_ped(extra_snp_data_513gts, panel_snps, encoding_dict = allele_info)
 
+    # TODO - need a check of the snp data structure here.
+
+
+#TODO - need tests for the failures, i.e. try passing data missing required alleles and such.

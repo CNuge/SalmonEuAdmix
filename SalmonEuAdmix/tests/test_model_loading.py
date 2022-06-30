@@ -4,6 +4,8 @@ from SalmonEuAdmix.model import load_y_scaler, load_x_scaler, load_dnn
 
 
 def test_LoadScalers():    
+    """ Test for the X and y scalers.
+    """    
     x_scaler = load_x_scaler()
     y_scaler = load_y_scaler()
  
@@ -12,7 +14,8 @@ def test_LoadScalers():
 
 
 def test_LoadDNN():
-
+    """ Test for instantiation of the DNN model.
+    """    
     model = load_dnn()
     #check the input shape
     assert (np.array(model.input.shape) == np.array([None, 513])).all()
