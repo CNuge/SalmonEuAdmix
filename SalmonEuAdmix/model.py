@@ -79,5 +79,3 @@ def mask_outside_limits(prediction_array):
         elif x < 0.0:
             prediction_array[i] = 0.0
     return prediction_array
-
-

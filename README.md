@@ -59,9 +59,6 @@ panel_snps    # this is a list of the 513 markers in the panel used by the predi
 SalmonEuAdmix can handle low levels
 
 
-
-
-
 ## TODO
 - add documentation to all functions
     - need to fill in the docstrings

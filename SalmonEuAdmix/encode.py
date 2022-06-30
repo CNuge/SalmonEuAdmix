@@ -139,10 +139,9 @@ def dosage_encode_snps(snp_arr, missing_val = "0 0", replace_missing_method = "m
 
     return encoded_data, None
 
-""" Take a string format PED and turn it into dosage encoding."""
 
 def encode_ped(snp_data, snp_columns, get_alleles = False, encoding_dict = None):
-    """_summary_
+    """Take a string format PED and turn it into dosage encoding.
 
     Args:
         snp_data (_type_): _description_
@@ -152,12 +151,10 @@ def encode_ped(snp_data, snp_columns, get_alleles = False, encoding_dict = None)
 
     Returns:
         _type_: _description_
-    """    """"""        
-    
+    """
     #make a copy of the input so that its not overriding the original, also prevents 
     #the pandas CopyWarning flag
     snp_data = snp_data.copy()
-    
     #encode with known major and minor alleles
     if encoding_dict is not None:
         #x = snp_columns[5]
@@ -165,7 +162,6 @@ def encode_ped(snp_data, snp_columns, get_alleles = False, encoding_dict = None)
             pq_info = encoding_dict[x]
             snp_data[x], _ = dosage_encode_snps(snp_data[x].values, known_pq = pq_info)
         return snp_data, None
-
     #calculate major and minor alleles from scratch, encode and return the major and minor dictonary
     elif get_alleles == True:
         allele_info = {}
@@ -173,9 +169,7 @@ def encode_ped(snp_data, snp_columns, get_alleles = False, encoding_dict = None)
             #print(x)
             snp_data[x], snp_dict = dosage_encode_snps(snp_data[x].values, record_snps = True)
             allele_info[x] = snp_dict
-
         return snp_data, allele_info
-
     #calculate major and minor alleles from scratch, encode but don't save the major and minor info
     else:
         #x = snp_columns[3]
@@ -185,8 +179,6 @@ def encode_ped(snp_data, snp_columns, get_alleles = False, encoding_dict = None)
         return snp_data, None
 
 
-#snp_df = extra_snp_data
-#subset_list = list(allele_info.keys())
 def subset_snp_df(snp_df, subset_list, leading_cols = False):
     """Take a dataframe of SNPs, subset only the columns for the list of SNPs provided.
     
@@ -208,7 +200,7 @@ def subset_snp_df(snp_df, subset_list, leading_cols = False):
         sub_merged = header_data + subset_list
         return snp_df[sub_merged]
 
-#df = train_df
+
 def get_model_inputs(df, x_cols = panel_snps, y_col = None, x_scaler = None, y_scaler = None):
     """_summary_
 
@@ -237,5 +229,3 @@ def get_model_inputs(df, x_cols = panel_snps, y_col = None, x_scaler = None, y_s
             y_out = y_scaler.transform(np.expand_dims(y_out, axis=1))
             y_out = np.squeeze(y_out)
     return x_out, y_out
-
-

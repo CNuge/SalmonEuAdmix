@@ -7,7 +7,7 @@ def test_AlleleInfo():
     """    
     assert len(allele_info.keys()) == 513
     assert len(panel_snps) == 513
-
+    # make sure the allele dict and the panel list match
     for x in allele_info.keys():
         assert x in panel_snps
 
@@ -15,26 +15,26 @@ def test_AlleleInfo():
 def test_PedMapReadAndTrim():
     """Test that the data are read in, and the marker panels are pulled and used.
     """
+   # the example files with only the essential data columns
     std_ped_file = 'SalmonEuAdmix/data/panel_513_data.ped'
     std_map_file = 'SalmonEuAdmix/data/panel_513_data.map'
-
+    # read in the data
     snp_data_513, snp_columns_513 = readPedMap_tsv_fmt(std_ped_file, std_map_file)
-
+    # make sure the shapes are what is expected
     assert snp_data_513.shape == (20, 519)
     assert len(snp_columns_513) == 513
     assert panel_snps == snp_columns_513
-
+    # the example files with superfluous and essential data columns
     extra_ped_file = 'SalmonEuAdmix/data/unit_test2.ped'
     extra_map_file = 'SalmonEuAdmix/data/unit_test2.map'
-
+    # read in the data
     extra_snp_data, extra_snp_columns = readPedMap_tsv_fmt(extra_ped_file, extra_map_file)
-
+    # make sure the shapes are what is expected
     assert extra_snp_data.shape == (20, 533)
     assert len(extra_snp_columns) > 513
-
+    # pull the required columns from the complete dataframe
     extra_snp_data_513gts = subset_snp_df(extra_snp_data, panel_snps)
     assert extra_snp_data_513gts.shape == (20, 513)
-
     #lead cols variant
     with_header_extra_snp_data_513gts = subset_snp_df(extra_snp_data, panel_snps, leading_cols = True)
     assert with_header_extra_snp_data_513gts.shape == (20, 519)
