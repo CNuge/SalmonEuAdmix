@@ -4,7 +4,7 @@ import pandas as pd
 from SalmonEuAdmix import panel_snps
 
 def readPedMap_tsv_fmt(ped_file, map_file, headers = False):
-    """Read in a ped and map file in and build a pandas DataFrame.
+    """Read in a ped and map file and build a pandas DataFrame.
 
     Args:
         ped_file (str): The path and name of the plink ped file.
@@ -12,7 +12,7 @@ def readPedMap_tsv_fmt(ped_file, map_file, headers = False):
         headers (bool, optional): Boolean indicating if the input ped and map files have header rows. Defaults to False.
 
     Returns:
-        pandas.DataFrame, : A pandas dataframe with the leading metadata columns and genotype data.
+        pandas.DataFrame: A pandas dataframe with the leading metadata columns and genotype data.
         list: A list of the names of the columns with the genotype data. 
     """
     col_names = ["chromosome", "snp" , "genetic_distance", "physical_distance"]
@@ -73,11 +73,12 @@ def calc_mode(snp_arr):
     """Get the most common value in the array of SNP values. 
     
     Used for imputing missing info.
+
     Args:
         snp_arr (_type_): _description_
 
     Returns:
-        _type_: _description_
+        tuple: _description_
     """
 
     vals, counts = np.unique(snp_arr, return_counts=True)
@@ -85,17 +86,18 @@ def calc_mode(snp_arr):
     return vals[index]
 
 
-
 def dosage_encode_snps(snp_arr, missing_val = "0 0", replace_missing_method = "mode", 
-                            record_snps = False, known_pq = False):
+                            record_snps = False, known_pq = None):
     """Dosage encode SNP genotypes for machine learning use.
-    Homozygous for major allele encoded as 0, heterozygoous = 1, Homozygous minor allele = 2
+    
+    Homozygous for major allele encoded as 0, heterozygoous = 1, Homozygous minor allele = 2.
+
     Args:
         snp_arr (_type_): _description_
-        missing_val (str, optional): _description_. Defaults to "0 0".
+        missing_val (str, optional): The string used to encode missing values in the ped file. Defaults to "0 0".
         replace_missing_method (str, optional): _description_. Defaults to "mode".
-        record_snps (bool, optional): _description_. Defaults to False.
-        known_pq (bool, optional): _description_. Defaults to False.
+        record_snps (bool, optional): Should the function return the dictonary of major and minor alleles. Defaults to False.
+        known_pq (tuple, optional): The known major and minor alleles. Defaults to None.
 
     Raises:
         ValueError: _description_
@@ -111,11 +113,11 @@ def dosage_encode_snps(snp_arr, missing_val = "0 0", replace_missing_method = "m
 
         snp_arr[snp_arr == missing_val] = mode_gt
     
-    if known_pq == True:
+    if known_pq is not None:
         #use the known major and minor alleles
         if len(known_pq) != 2:
             raise ValueError("tuple of known_pq must be made of two and only two characters.")
-        p, q = known_pq
+        p, q = known_pq['p'], known_pq['q']
 
     else:
         #determine the major and minor alleles
@@ -161,7 +163,6 @@ def encode_ped(snp_data, snp_columns, get_alleles = False, encoding_dict = None)
         #x = snp_columns[5]
         for x in snp_columns:
             pq_info = encoding_dict[x]
-            #print(x)
             snp_data[x], _ = dosage_encode_snps(snp_data[x].values, known_pq = pq_info)
         return snp_data, None
 
