@@ -3,37 +3,37 @@ import pandas as pd
 
 from SalmonEuAdmix import panel_snps
 
-def readPedMap_tsv_fmt(ped_file, map_file = "", headers = False):
-    """_summary_
+def readPedMap_tsv_fmt(ped_file, map_file, headers = False):
+    """Read in a ped and map file in and build a pandas DataFrame.
 
     Args:
-        ped_file (_type_): _description_
-        map_file (str, optional): _description_. Defaults to "".
-        headers (bool, optional): _description_. Defaults to False.
+        ped_file (str): The path and name of the plink ped file.
+        map_file (str): The path and name of the plink map file.
+        headers (bool, optional): Boolean indicating if the input ped and map files have header rows. Defaults to False.
 
     Returns:
-        _type_: _description_
+        pandas.DataFrame, : A pandas dataframe with the leading metadata columns and genotype data.
+        list: A list of the names of the columns with the genotype data. 
     """
     col_names = ["chromosome", "snp" , "genetic_distance", "physical_distance"]
-
     if headers == True:
+        #read in the map file
         map_data = pd.read_csv(map_file, skiprows = 0, names = col_names, sep = '\t')
-        
+        #build the complete column name list        
         header_data = ['#family', 'individual', 'sire', 'dam', 'sex', 'pheno']
         snp_columns = list(map_data['snp'].values)
         header_data.extend(snp_columns)
-
+        #read in the ped file and apply the headers
         snp_data = pd.read_csv(ped_file, skiprows = 0, names = header_data, sep = '\t')
-        return snp_data, snp_columns
-        
+        return snp_data, snp_columns        
     else:
-        
+        #read in the map file
         map_data = pd.read_csv(map_file, names = col_names, sep = '\t')
-        
+        #build the complete column name list
         header_data = ['#family', 'individual', 'sire', 'dam', 'sex', 'pheno']
         snp_columns = list(map_data['snp'].values)
         header_data.extend(snp_columns)
-        
+        #read in the ped file and apply the headers
         snp_data = pd.read_csv(ped_file, names = header_data, sep = '\t')
         return snp_data, snp_columns
   
