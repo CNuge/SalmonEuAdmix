@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from SalmonEuAdmix import allele_info, panel_snps
+from SalmonEuAdmix import allele_info, panel_snps, mode_gts
 from SalmonEuAdmix.encode import readPedMap_tsv_fmt, subset_snp_df, encode_ped, dosage_encode_snps
 
 
@@ -76,3 +76,10 @@ def test_missing_data_catch():
 
     with pytest.raises(ValueError):
         dosage_encode_snps(snp_data_1)
+
+    #it should work if we use the saved data
+    fake_name = 'AX-87433461'
+    mr = mode_gts[fake_name]
+    out, _ = dosage_encode_snps(snp_data_1, missing_replacement=mr)
+
+    assert out == [0, 0, 0, 0, 0, 2, 1, 0]
