@@ -7,22 +7,24 @@ Despite never being approved for commercial use in Canada, there is growing evid
 SalmonEuAdmix is a program designed to streamline the admixture estimation process, and allow for European admixture proporions to be accurately estimated from a parsimonious set of SNP markers. Relying exlusively on the genotypes for the set of SNPs as input, SalmonEuAdmix can predict admixture proporions for novel samples. The program utilizes a machine-learning model trained on pairs of genotypes and admixture proportions for 5812 individuals encompassing a mixture of wild and aquaculture fish of European, North American, and mixed ancestry. The model has been experimentally show to predict admixture proportions that conform to the estimations provided by a complete admixture analysis with greater than 98% accuracy.
 
 
-### detailed description here, copy into setup.py
+### How does SalmonEuAdmix work?
 
-### what is it doing? (A bunch of backgroud detail abstracted away into that one command):
+The command line interface of SalmonEuAdmix is relitively simple, 
+When a run of SalmonEuAdmix is invoked via the command line, the following workflow takes place to process and analyze the inputs:
 
-1. reads the ped and map files
-	-if there are more SNPs than the panel, it subsets just the required SNPs
-2. Encodes the SNPs for the machine learning model
+1. The program reads the ped and map files
+    - These data files are standard Plink file formats. More information on them can be found [on the Plink website](https://www.cog-genomics.org/plink/1.9/formats#ped).
+	- Your input is permitted to include more SNPs than those required by the model. If there are more SNPs than the panel, the program subsets just the required SNPs and ignores the others.
+2. The program encodes the SNPs for the machine learning model in dosage format.
 	- i.e. `AA AT TT` -> `0 1 2`
-	- is uses a stored data structure so that the Major and Minor encoding is consistent with previous
-3. Loads a Deep neural network trained to predict European Admixture % (its been shown to be about 99% accurate relative to running a complete from scratch ).
-4. Applies scalers to interface with the neural network, runs the DNN to make predictions
-5. Spits the data to an output file ready for excel/R/human inspection.
+	- To do this, it uses a stored data structure to ensure the Major and Minor encoding are consistent with the data that were used in training.
+3. A Deep neural network trained to predict European Admixture % (its been shown to be about 99% accurate relative to running a complete from scratch) is loaded and used to make predictions.
+5. The predictions are output to a tab separated file that is ready for excel/R/human inspection.
 
 
 
 ## Installation
+Clone this repository, and then 
 
 ```
 create the release:
@@ -56,13 +58,13 @@ Where the ped and the map file are obtained from [plink](https://www.cog-genomic
 To see the list of required SNPs, you can look in the example .map file:
 `SalmonEuAdmix/data/panel_513_data.map`
 
-or from within python run:
+To view the list of markers from within python run the following:
 ```
 from SalmonEuAdmix import panel_snps
-panel_snps    # this is a list of the 513 markers in the panel used by the predictive model. All must be present.
+panel_snps    # this is a list of the 513 markers in the panel used by the predictive model. All must be present in the input.
 ```
 
-SalmonEuAdmix can handle low levels
+SalmonEuAdmix can handle low levels of missing information, the modal genotype from the training data will be imputed to fill in missing data. This 
 
 
 ## TODO
