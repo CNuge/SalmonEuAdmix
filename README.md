@@ -23,27 +23,22 @@ When a run of SalmonEuAdmix is invoked via the command line, the following workf
 
 
 ## Installation
-Clone this repository, and then 
+Clone this repository, and then run
 
 ```
-create the release:
+# create the release:
 python setup.py sdist
-install the release:
+# install the release:
 python3 setup.py install
 
-#then check from home dir if the package works with
+# then check if the package works by calling the help menu
 SalmonEuAdmix -h
 ```
 
 ## Usage 
 ### Command line interface
 
-Get the help menu:
-```
-SalmonEuAdmix -h
-```
 
-Run the neural network to predict european admixture for a series of genotyped individuals.
 Example inputs can be found in the subfolder SalmonEuAdmix/data/
 The following will read in the panel_513_data .ped and .map files, run the admixture prediction pipeline and then output the predicted european admixture proportions for each individual in the file `example_output.tsv`
 
@@ -52,17 +47,17 @@ SalmonEuAdmix -p panel_513_data.ped -m panel_513_data.map -o example_output.tsv
 
 ```
 
-Where the ped and the map file are obtained from [plink](https://www.cog-genomics.org/plink/). Note you'll probably want to do some pre-filtering for gentype quality. The 513 SNPs of the panel must all be present in the file, additional marker columns are allowed, and these will simply be filtered out prior to the encoding
+Where the ped (`-p`) and the map files (`-m`) are obtained from [plink](https://www.cog-genomics.org/plink/). Note you will more than likely want to use plink or some associated methods to do some pre-processing, filtering for gentype quality, missing data, *etc.*. The 513 SNPs of the panel must all be present in the file, additional marker columns are allowed, and these will simply be filtered out prior to the encoding step.
 
 To see the list of required SNPs, you can look in the example .map file:
 `SalmonEuAdmix/data/panel_513_data.map`
 
-To view the list of markers from within python run the following:
+You can also view the list of markers from within python run the following:
 ```
 from SalmonEuAdmix import panel_snps
 panel_snps    # this is a list of the 513 markers in the panel used by the predictive model. All must be present in the input.
 ```
 
-SalmonEuAdmix can handle low levels of missing information, the modal genotype from the training data will be imputed to fill in missing data. This 
+SalmonEuAdmix can handle low levels of missing information, the modal genotype from the training data will be imputed to fill in missing data.  
 
 
