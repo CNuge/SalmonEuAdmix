@@ -1,6 +1,12 @@
 # SalmonEuAdmix
 ## A machine learning-based library for estimating European admixture proportions in Atlantic salmon
 
+
+Despite never being approved for commercial use in Canada, there is growing evidence of European Atlantic salmon genetic information introgressing into North American aquaculture stocks and entering wild North American populations through aquaculture escapees Understanding the extent of European introgression and the impacts on wild salmon populations relies on the characterization of European admixture proportions. Obtaining this information using large SNP panels or microsatellite markers can be expensive, analytically intensive, and relies on the inclusion of numerous North American and European individuals to for baselines for subsequent analyses.
+
+SalmonEuAdmix is a program designed to streamline the admixture estimation process, and allow for European admixture proporions to be accurately estimated from a parsimonious set of SNP markers. Relying exlusively on the genotypes for the set of SNPs as input, SalmonEuAdmix can predict admixture proporions for novel samples. The program utilizes a machine-learning model trained on pairs of genotypes and admixture proportions for 5812 individuals encompassing a mixture of wild and aquaculture fish of European, North American, and mixed ancestry. The model has been experimentally show to predict admixture proportions that conform to the estimations provided by a complete admixture analysis with greater than 98% accuracy.
+
+
 ### detailed description here, copy into setup.py
 
 ### what is it doing? (A bunch of backgroud detail abstracted away into that one command):
