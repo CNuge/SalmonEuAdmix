@@ -144,13 +144,19 @@ def encode_ped(snp_data, snp_columns, get_alleles = False, encoding_dict = None)
     """Take a string format PED and turn it into dosage encoding.
 
     Args:
-        snp_data (_type_): _description_
-        snp_columns (_type_): _description_
-        get_alleles (bool, optional): _description_. Defaults to False.
-        encoding_dict (_type_, optional): _description_. Defaults to None.
+        snp_data (pandas.DataFrame): The dataframe with string formatted genotypes.
+        snp_columns (list): A list of strings specifying the marker names for encoding.
+        get_alleles (bool, optional): Boolean flag indicating if the major and minor allele should be returned. 
+                                        Defaults to False.
+        encoding_dict (dict, optional): An optional dictonary of dictonaries with the known major and minor alleles 
+                                        for the marker (format: {'snp_name': {'p': 'major_allele_character', 'q': 'minor_allele_character'}}). 
+                                        Defaults to None (in which case MAF is determined de novo).
 
     Returns:
-        _type_: _description_
+        pandas.DataFrame: A dosage encoded dataframe for use with the machine learning algorithm.
+        dict: A dictonary of dictonaries with the major and minor alleles for the markers. 
+             format: { 'snp_name': {'p': 'major_allele_character', 
+                                    'q': 'minor_allele_character'} }. 
     """
     #make a copy of the input so that its not overriding the original, also prevents 
     #the pandas CopyWarning flag
@@ -207,7 +213,8 @@ def subset_snp_df(snp_df, subset_list, leading_cols = False):
             return snp_df[sub_merged]
         except KeyError:
             raise KeyError("Could not subset the required markers from ped file,"+\
-                " ensure that all required SNPs are present.")
+                           " ensure that all required SNPs are present.")
+
 
 def get_model_inputs(df, x_cols = panel_snps, y_col = None, x_scaler = None, y_scaler = None):
     """_summary_

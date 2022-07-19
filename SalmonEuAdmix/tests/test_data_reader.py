@@ -57,8 +57,6 @@ def test_ReadAndEncode():
     snp_data, _ = encode_ped(extra_snp_data_513gts, panel_snps, encoding_dict = allele_info)
 
 
-
-
 def test_fails_ReadButEncodeFlagsMissingData():
     """Test that reading a file with missing columns fails
     """
