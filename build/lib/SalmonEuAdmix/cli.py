@@ -1,4 +1,3 @@
-import os
 import sys
 import argparse
 import pandas as pd
@@ -81,6 +80,7 @@ def main():
     #save data to the specified output file
     out_df.to_csv(out_file, sep = '\t', index = False)
     print("done!")
+
 
 if __name__ == '__main__':
     main()

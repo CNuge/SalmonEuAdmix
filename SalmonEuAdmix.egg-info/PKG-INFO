@@ -8,10 +8,19 @@ Author-email: Cameron.Nugent@dfo-mpo.gc.ca
 License: LICENSE.md
 Platform: UNKNOWN
 Requires-Python: >=3.9.7
+License-File: LICENCE.md
 
 
 SalmonEuAdmix: a machine learning-based library for estimating European admixture proportions in Atlantic salmon. 
 
-TODO - Add a detailed description here.
+SalmonEuAdmix is a program designed to streamline the admixture estimation process, 
+and allow for European admixture proporions to be accurately estimated from a 
+parsimonious set of SNP markers. Relying exlusively on the genotypes for the set 
+of SNPs as input, SalmonEuAdmix can predict admixture proporions for novel samples. 
+The program utilizes a machine-learning model trained on pairs of genotypes and 
+admixture proportions for 5812 individuals encompassing a mixture of wild and 
+aquaculture fish of European, North American, and mixed ancestry. The model has 
+been experimentally show to predict admixture proportions that conform to the 
+estimations provided by a complete admixture analysis with greater than 98 percent accuracy.
 
 

@@ -1,3 +1,4 @@
+LICENCE.md
 README.md
 setup.py
 SalmonEuAdmix/__init__.py
@@ -13,6 +14,8 @@ SalmonEuAdmix.egg-info/top_level.txt
 SalmonEuAdmix/data/DNNregressor_model_v1
 SalmonEuAdmix/data/SNP_major_minor_info.pkl
 SalmonEuAdmix/data/X_scaler_v1
+SalmonEuAdmix/data/panel_301_markers.map
+SalmonEuAdmix/data/panel_301_markers.ped
 SalmonEuAdmix/data/panel_513_data.map
 SalmonEuAdmix/data/panel_513_data.ped
 SalmonEuAdmix/data/unit_test2.map

@@ -23,7 +23,8 @@ When a run of SalmonEuAdmix is invoked via the command line, the following workf
 
 
 ## Installation
-Clone this repository, and then run
+
+Clone this repository, and then run:
 
 ```
 # create the release:
@@ -38,9 +39,8 @@ SalmonEuAdmix -h
 ## Usage 
 ### Command line interface
 
-
-Example inputs can be found in the subfolder SalmonEuAdmix/data/
-The following will read in the panel_513_data .ped and .map files, run the admixture prediction pipeline and then output the predicted european admixture proportions for each individual in the file `example_output.tsv`
+Example input files can be found in the subfolder SalmonEuAdmix/data/
+The following command will read in the panel_513_data .ped and .map files, run the admixture prediction pipeline and then output the predicted european admixture proportions for each individual in a file named `example_output.tsv`.
 
 ```
 SalmonEuAdmix -p panel_513_data.ped -m panel_513_data.map -o example_output.tsv
