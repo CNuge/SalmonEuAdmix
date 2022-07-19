@@ -18,7 +18,10 @@ allele_info = pickle.load(open(allele_info_file, "rb"))
 panel_snps = list(allele_info.keys())
 
 
-#possibly: remove code below, use the model.py module code to instantiate the objects here
+mode_gt_file = os.path.join(location, 'data', 'SNP_impute_info.pkl')
+mode_gts = pickle.load(open(mode_gt_file, "rb"))
+
+# possibly: remove code below, use the model.py module code to instantiate the objects here
 # or can leave that detail unabstracted
 
 """

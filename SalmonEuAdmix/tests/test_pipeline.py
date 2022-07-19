@@ -1,4 +1,4 @@
-from SalmonEuAdmix import allele_info, panel_snps
+from SalmonEuAdmix import allele_info, panel_snps, mode_gts
 from SalmonEuAdmix.model import load_y_scaler, load_x_scaler, load_dnn 
 from SalmonEuAdmix.encode import readPedMap_tsv_fmt, encode_ped, get_model_inputs, subset_snp_df
 
@@ -18,7 +18,8 @@ def test_ReadAndPredict():
     # pull the required columns from the complete dataframe
     extra_snp_data_513gts = subset_snp_df(extra_snp_data, panel_snps)
     # encode the data
-    snp_data, _ = encode_ped(extra_snp_data_513gts, panel_snps, encoding_dict = allele_info)
+    snp_data, _ = encode_ped(extra_snp_data_513gts, panel_snps, 
+                             encoding_dict = allele_info, imputation_info = mode_gts)
     # get the ml inputs
     test_X, _ = get_model_inputs(snp_data, panel_snps, x_scaler = x_scaler)
     # make sure the inputs are expected shape

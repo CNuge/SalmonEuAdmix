@@ -12,6 +12,7 @@ SalmonEuAdmix.egg-info/entry_points.txt
 SalmonEuAdmix.egg-info/requires.txt
 SalmonEuAdmix.egg-info/top_level.txt
 SalmonEuAdmix/data/DNNregressor_model_v1
+SalmonEuAdmix/data/SNP_impute_info.pkl
 SalmonEuAdmix/data/SNP_major_minor_info.pkl
 SalmonEuAdmix/data/X_scaler_v1
 SalmonEuAdmix/data/panel_301_markers.map

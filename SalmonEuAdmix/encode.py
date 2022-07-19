@@ -145,7 +145,8 @@ def dosage_encode_snps(snp_arr, missing_val = "0 0", missing_replacement = None,
     return encoded_data, None
 
 
-def encode_ped(snp_data, snp_columns, get_alleles = False, encoding_dict = None):
+def encode_ped(snp_data, snp_columns, 
+                get_alleles = False, encoding_dict = None, imputation_info = None):
     """Take a string format PED and turn it into dosage encoding.
 
     Args:
@@ -156,6 +157,8 @@ def encode_ped(snp_data, snp_columns, get_alleles = False, encoding_dict = None)
         encoding_dict (dict, optional): An optional dictonary of dictonaries with the known major and minor alleles 
                                         for the marker (format: {'snp_name': {'p': 'major_allele_character', 'q': 'minor_allele_character'}}). 
                                         Defaults to None (in which case MAF is determined de novo).
+        imputation_info (dict, optional) : An optional dictonary providing replacement alleles for missing data if available.
+                                            If not provided, the mean value from each column of snp_data will be used for imputation.
 
     Returns:
         pandas.DataFrame: A dosage encoded dataframe for use with the machine learning algorithm.
@@ -171,14 +174,25 @@ def encode_ped(snp_data, snp_columns, get_alleles = False, encoding_dict = None)
         #x = snp_columns[5]
         for x in snp_columns:
             pq_info = encoding_dict[x]
-            snp_data[x], _ = dosage_encode_snps(snp_data[x].values, known_pq = pq_info, )
+            if imputation_info is None:
+                snp_data[x], _ = dosage_encode_snps(snp_data[x].values, known_pq = pq_info, )
+            else:
+                missing_replacement = imputation_info[x]
+                snp_data[x], _ = dosage_encode_snps(snp_data[x].values, known_pq = pq_info, 
+                                                    missing_replacement = missing_replacement)
+
         return snp_data, None
     #calculate major and minor alleles from scratch, encode and return the major and minor dictonary
     elif get_alleles == True:
         allele_info = {}
         for x in snp_columns:
             #print(x)
-            snp_data[x], snp_dict = dosage_encode_snps(snp_data[x].values, record_snps = True)
+            if imputation_info is None:
+                snp_data[x], _ = dosage_encode_snps(snp_data[x].values, known_pq = pq_info)
+            else:
+                missing_replacement = imputation_info[x]
+                snp_data[x], _ = dosage_encode_snps(snp_data[x].values, known_pq = pq_info, 
+                                                    missing_replacement = missing_replacement)
             allele_info[x] = snp_dict
         return snp_data, allele_info
     #calculate major and minor alleles from scratch, encode but don't save the major and minor info

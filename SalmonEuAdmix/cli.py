@@ -1,7 +1,7 @@
 import sys
 import argparse
 import pandas as pd
-from SalmonEuAdmix import allele_info, panel_snps
+from SalmonEuAdmix import allele_info, panel_snps, mode_gts
 from SalmonEuAdmix.model import load_y_scaler, load_x_scaler, load_dnn, mask_outside_limits
 from SalmonEuAdmix.encode import readPedMap_tsv_fmt, encode_ped, get_model_inputs, subset_snp_df
 
@@ -62,9 +62,9 @@ def main():
 
     print("encoding the inputs")
     #encode the data
-    snp_data, _ = encode_ped(snp_data, snp_columns, encoding_dict = allele_info)
+    snp_data, _ = encode_ped(snp_data, snp_columns, encoding_dict=allele_info, imputation_info=mode_gts)
     #get the ml inputs
-    test_X, _ = get_model_inputs(snp_data, panel_snps, x_scaler = x_scaler)
+    test_X, _ = get_model_inputs(snp_data, panel_snps, x_scaler=x_scaler)
     print("making predictions")
     #make predictions with the model
     test_yht_raw = panel_dnn.predict(test_X)
