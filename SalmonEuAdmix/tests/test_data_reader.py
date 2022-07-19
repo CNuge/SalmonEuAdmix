@@ -1,6 +1,7 @@
 import pytest
+import numpy as np
 from SalmonEuAdmix import allele_info, panel_snps
-from SalmonEuAdmix.encode import readPedMap_tsv_fmt, subset_snp_df, encode_ped
+from SalmonEuAdmix.encode import readPedMap_tsv_fmt, subset_snp_df, encode_ped, dosage_encode_snps
 
 
 def test_AlleleInfo():
@@ -69,3 +70,9 @@ def test_fails_ReadButEncodeFlagsMissingData():
     with pytest.raises(KeyError):
         missing_snp_data_301gts = subset_snp_df(missing_snp_data, panel_snps)
 
+def test_missing_data_catch():
+
+    snp_data_1 = np.array(["0 0", "0 0", "0 0", "0 0", "0 0", "A A",  "A T", "T T"])
+
+    with pytest.raises(ValueError):
+        dosage_encode_snps(snp_data_1)

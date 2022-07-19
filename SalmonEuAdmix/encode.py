@@ -110,7 +110,6 @@ def dosage_encode_snps(snp_arr, missing_val = "0 0", replace_missing_method = "m
         mode_gt = calc_mode(snp_arr)
         if mode_gt == missing_val:
             raise ValueError("most common allele is a missing genotype!")
-
         snp_arr[snp_arr == missing_val] = mode_gt
     
     if known_pq is not None:
