@@ -194,12 +194,20 @@ def subset_snp_df(snp_df, subset_list, leading_cols = False):
     """
 
     if leading_cols == False:
-        return snp_df[subset_list]
+        try:
+            return snp_df[subset_list]
+        except KeyError:
+            raise KeyError("Could not subset required markers from ped file,"+\
+                " ensure that all required SNPs are present.")
+
     if leading_cols == True:
         header_data = ['#family', 'individual', 'sire', 'dam', 'sex', 'pheno']
         sub_merged = header_data + subset_list
-        return snp_df[sub_merged]
-
+        try:
+            return snp_df[sub_merged]
+        except KeyError:
+            raise KeyError("Could not subset the required markers from ped file,"+\
+                " ensure that all required SNPs are present.")
 
 def get_model_inputs(df, x_cols = panel_snps, y_col = None, x_scaler = None, y_scaler = None):
     """_summary_

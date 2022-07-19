@@ -1,3 +1,4 @@
+import pytest
 from SalmonEuAdmix import allele_info, panel_snps
 from SalmonEuAdmix.encode import readPedMap_tsv_fmt, subset_snp_df, encode_ped
 
@@ -55,7 +56,18 @@ def test_ReadAndEncode():
 
     snp_data, _ = encode_ped(extra_snp_data_513gts, panel_snps, encoding_dict = allele_info)
 
-    # TODO - need a check of the snp data structure here.
 
 
-#TODO - need tests for the failures, i.e. try passing data missing required alleles and such.
+
+def test_fails_ReadButEncodeFlagsMissingData():
+    """Test that reading a file with missing columns fails
+    """
+
+    ped_file_301_markers = 'SalmonEuAdmix/data/panel_301_markers.ped'
+    map_file_301_markers = 'SalmonEuAdmix/data/panel_301_markers.map'
+
+    missing_snp_data, missing_snp_columns = readPedMap_tsv_fmt(ped_file_301_markers, map_file_301_markers)
+
+    with pytest.raises(KeyError):
+        missing_snp_data_301gts = subset_snp_df(missing_snp_data, panel_snps)
+
