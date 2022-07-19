@@ -1,7 +1,6 @@
 # SalmonEuAdmix
 ## A machine learning-based library for estimating European admixture proportions in Atlantic salmon
 
-
 Despite never being approved for commercial use in Canada, there is growing evidence of European Atlantic salmon genetic information introgressing into North American aquaculture stocks and entering wild North American populations through aquaculture escapees Understanding the extent of European introgression and the impacts on wild salmon populations relies on the characterization of European admixture proportions. Obtaining this information using large SNP panels or microsatellite markers can be expensive, analytically intensive, and relies on the inclusion of numerous North American and European individuals to for baselines for subsequent analyses.
 
 SalmonEuAdmix is a program designed to streamline the admixture estimation process, and allow for European admixture proporions to be accurately estimated from a parsimonious set of SNP markers. Relying exlusively on the genotypes for the set of SNPs as input, SalmonEuAdmix can predict admixture proporions for novel samples. The program utilizes a machine-learning model trained on pairs of genotypes and admixture proportions for 5812 individuals encompassing a mixture of wild and aquaculture fish of European, North American, and mixed ancestry. The model has been experimentally show to predict admixture proportions that conform to the estimations provided by a complete admixture analysis with greater than 98% accuracy.
@@ -67,28 +66,3 @@ panel_snps    # this is a list of the 513 markers in the panel used by the predi
 SalmonEuAdmix can handle low levels of missing information, the modal genotype from the training data will be imputed to fill in missing data. This 
 
 
-## TODO
-- add documentation to all functions
-    - need to fill in the docstrings
-    - verbose typing of outputs?
-- add a license
-- make sure unit tests cover all the functions
-- verbose documents for the argument parser.
-- add a header == true or false line to the PED parser
-- add travis.ci to display the unit tests.
-- I've killed the tflite, it complicates the code far too much for the few mb size savings
-    - [x] make a shrunken version of the DNN
-        -[x] convert the DNN to tflite to make it smaller
-        -make sure the tflite and regular agree (TODO)
-        -sub out the requirements and try to eliminate the tensorflow dependency
-            ^go back to paper repo, and sub in the finished product. (see desktop for starting code)
-            - keep just one or the other
-                - If using the tflite, need to add an iterative predict function. It won't bulk predict on a matrix of multiple inputs
-- silence any tf command line warnings
-- cleanup / eliminate the main sections of module files (these are start of unit tests)
-- *IMPORTANT ADD*
-    - add the mode values to the SNP_major_minor_info.pkl?
-        - want the imputation based on the training data, not based off of the new data
-            - could have a param added to enable either.
-- make it pip installable?
-- lint the code to get you spacing and formatting pretty and proper
