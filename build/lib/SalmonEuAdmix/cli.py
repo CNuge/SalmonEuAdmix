@@ -24,7 +24,7 @@ def input_parser(args):
         help = "The name output file that is produced.")
     parser.add_argument("-c", "--constrain", type = bool , default = True, 
         help = "Boolean indicating if program should constrain the predicted proportions\n"+\
-            "to lower bound of 0.0 and upper bound of 1.0. Default is True")
+            "to lower bound of 0.0 and upper bound of 1.0. Default is True.")
 
     return parser.parse_args(args)
 

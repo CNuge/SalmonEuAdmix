@@ -85,9 +85,6 @@ def calc_mode(snp_arr):
     index = np.argmax(counts)
     return vals[index]
 
-print("TODO - need another replace missing method added, where stored data is used")
-print("to fill, not based off the new input file")
-
 
 def dosage_encode_snps(snp_arr, missing_val = "0 0", missing_replacement = None, 
                             record_snps = False, known_pq = None):
@@ -224,7 +221,6 @@ def subset_snp_df(snp_df, subset_list, leading_cols = False):
         except KeyError:
             raise KeyError("Could not subset required markers from ped file,"+\
                 " ensure that all required SNPs are present.")
-
     if leading_cols == True:
         header_data = ['#family', 'individual', 'sire', 'dam', 'sex', 'pheno']
         sub_merged = header_data + subset_list
