@@ -36,3 +36,8 @@ def test_ReadAndPredict():
     # ensure the rounded predictions match the expected predictions
     # this test *should* be robust to minor model changes.
     assert rounded_yht == expected_preds
+
+
+# TODO - add unit tests and make nexessary code modifications to allow for 
+# the different DNN (v4, trained on 301 SNP subset)
+# to be swapped in and used.
