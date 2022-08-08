@@ -22,6 +22,6 @@ mode_gts = pickle.load(open(mode_gt_file, "rb"))
 
 reduced_marker_301_file = os.path.join(location, 'data', 'reduced_marker_list.pkl')
 reduced_panel_snps = pickle.load(open(reduced_marker_301_file, "rb"))
-# for dev:
+## for dev:
 # reduced_marker_301_file = 'SalmonEuAdmix/data/reduced_marker_list.pkl'
 
