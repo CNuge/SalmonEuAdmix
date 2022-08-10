@@ -44,8 +44,8 @@ def test_ReadAndPredictReducedModel():
     x_scaler_301 = load_301_x_scaler()
     y_scaler_301 = load_301_y_scaler()
     # the example files with essential data columns for Reduced model only
-    reduced_ped_file = 'SalmonEuAdmix/data/panel_301_markers.ped'
-    reduced_map_file = 'SalmonEuAdmix/data/panel_301_markers.map'
+    reduced_ped_file = 'SalmonEuAdmix/data/panel_301_data.ped'
+    reduced_map_file = 'SalmonEuAdmix/data/panel_301_data.map'
     reduced_snp_data, reduced_snp_columns = readPedMap_tsv_fmt(reduced_ped_file, reduced_map_file)
     #make sure its 301 markers and the 6 additional columns
     assert reduced_snp_data.shape == (16, 307)

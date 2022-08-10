@@ -62,8 +62,8 @@ def test_fails_ReadButEncodeFlagsMissingData():
     """Test that reading a file with missing columns fails
     """
 
-    ped_file_301_markers = 'SalmonEuAdmix/data/panel_301_markers.ped'
-    map_file_301_markers = 'SalmonEuAdmix/data/panel_301_markers.map'
+    ped_file_301_markers = 'SalmonEuAdmix/data/panel_301_data.ped'
+    map_file_301_markers = 'SalmonEuAdmix/data/panel_301_data.map'
 
     missing_snp_data, missing_snp_columns = readPedMap_tsv_fmt(ped_file_301_markers, map_file_301_markers)
 
