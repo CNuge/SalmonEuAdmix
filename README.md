@@ -23,9 +23,13 @@ A run of `SalmonEuAdmix` is invoked via a command line interface. The following 
 
 ## Installation
 
-`SalmonEuAdmix` is a Python3 program, to use it you will need to have [Python3](https://www.python.org/downloads/) installed on your computer. It is recommended, though not required, that you use a [virtual environment](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment) to install and run `SalmonEuAdmix`.
+`SalmonEuAdmix` is a Python3 program, to use it you will need to have [Python3](https://www.python.org/downloads/) installed on your computer. 
+
+### Optional setup
+It is recommended, though not required, that you use a [virtual environment](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment) to install and run `SalmonEuAdmix` from GitHub.
+
 ```
-# make a virtual environment named 'Env'
+# from the command line, make a virtual environment named 'Env'
 python3 -m venv Env
 # activate the environment
 source Env/bin/activate
@@ -34,22 +38,32 @@ source Env/bin/activate
 deactivate
 ```
 
-To set up and install `SalmonEuAdmix`, clone this repository, and then from within the folder run the following commands:
+### Install version via pip
+SalmonEuAdmix is available on [pypi](https://pypi.org/project/SalmonEuAdmix/) and can be installed via Python's package installer pip.
 ```
-#1. clone the repository:
-git clone git@github.com:CNuge/SalmonEuAdmix.git
-#alternatively, you can download and unzip the repository
-
-#2. enter the SalmonEuAdmix repository folder and run:
-cd SalmonEuAdmix
-pip install -e .
-#this shoud install the python package and make the command line tool available on your system
-
-# 3. check the package works by calling the help menu
+#from the command line, simply run
+pip install SalmonEuAdmix
+# check that the installation was successful by calling the help menu
 SalmonEuAdmix -h 
-# you should get a command line output listing the options
 
-# 4. You're good to start using SalmonEuAdmix
+```
+
+### Install development version from GitHub
+
+To set up and install `SalmonEuAdmix` from Github, clone this repository (alternatively, you can download and unzip it). 
+```
+git clone git@github.com:CNuge/SalmonEuAdmix.git
+```
+
+Then from within the SalmonEuAdmix repository run: 
+```
+pip install -e .
+```
+This shoud install the python package and make the command line tool available on your system. You can check the package works by calling the help menu.
+```
+SalmonEuAdmix -h 
+```
+From that command you should get an output listing the program's options. From there you're good to start using SalmonEuAdmix!
 ```
 
 ## Usage 
