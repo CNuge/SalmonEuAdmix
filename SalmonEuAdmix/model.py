@@ -1,6 +1,7 @@
 import os
 import pickle
 
+from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
 
@@ -59,10 +60,14 @@ def load_y_scaler():
 def load_dnn():
     """Load the tensorflow lite version of the model."""
     location = os.path.dirname(os.path.realpath(__file__))
-    dnn_file = os.path.join(location, 'data', 'DNNregressor_model_v1')
-    panel_dnn = pickle.load(open(dnn_file, "rb"))
+    #dnn_file = os.path.join(location, 'data', 'DNNregressor_model_v1')
+    #panel_dnn = pickle.load(open(dnn_file, "rb"))
+    dnn_file = os.path.join(location, 'data', 'dnn_513_tf')
+    panel_dnn = keras.models.load_model(dnn_file)    
     return panel_dnn
 
+#dnn_file_513 =pickle.load(open('DNNregressor_model_v1', "rb"))
+#dnn_file_513.save('dnn_513_tf')
 
 def load_301_x_scaler():
     """Load the X scaler used to prep data for the model input."""
@@ -84,9 +89,13 @@ def load_301_y_scaler():
 def load_301_dnn():
     """Load the tensorflow lite version of the model."""
     location = os.path.dirname(os.path.realpath(__file__))
-    dnn_file = os.path.join(location, 'data', 'DNNregressor_model_v4')
-    panel_dnn = pickle.load(open(dnn_file, "rb"))
+    #old version, did not load on windows correctly so switching from pkl to tensorflow
+    #dnn_file = os.path.join(location, 'data', 'DNNregressor_model_v4')
+    #panel_dnn = pickle.load(open(dnn_file, "rb"))
+    dnn_file = os.path.join(location, 'data', 'dnn_301_tf')
+    panel_dnn = keras.models.load_model(dnn_file)    
     return panel_dnn
+
 
 
 def mask_outside_limits(prediction_array):
