@@ -17,7 +17,7 @@ estimations provided by a complete admixture analysis with greater than 98 perce
 
 setup(
 	name = 'SalmonEuAdmix',
-	version = '1.0.3',
+	version = '1.0.4',
 	author = 'Cam Nugent',
 	author_email = 'Cameron.Nugent@dfo-mpo.gc.ca',
 	url = 'https://github.com/CNuge/SalmonEuAdmix',

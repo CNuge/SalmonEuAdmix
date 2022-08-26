@@ -60,10 +60,12 @@ def load_y_scaler():
 def load_dnn():
     """Load the tensorflow lite version of the model."""
     location = os.path.dirname(os.path.realpath(__file__))
-    dnn_file = os.path.join(location, 'data', 'dnn_513_tf')
+    dnn_file = os.path.join(location, 'data', 'dnn_513_tf.h5')
     panel_dnn = keras.models.load_model(dnn_file)    
     return panel_dnn
 
+#panel_dnn = pickle.load(open('DNNregressor_model_v1', "rb"))
+#panel_dnn.save('dnn_513_tf.h5')
 
 def load_301_x_scaler():
     """Load the X scaler used to prep data for the model input."""
@@ -85,10 +87,13 @@ def load_301_y_scaler():
 def load_301_dnn():
     """Load the tensorflow lite version of the model."""
     location = os.path.dirname(os.path.realpath(__file__))
-    dnn_file = os.path.join(location, 'data', 'dnn_301_tf')
+    dnn_file = os.path.join(location, 'data', 'dnn_301_tf.h5')
     panel_dnn = keras.models.load_model(dnn_file)    
     return panel_dnn
 
+#panel_dnn = keras.models.load_model('dnn_301_tf/saved_model.pb')   
+#panel_dnn = pickle.load(open('DNNregressor_model_v4', "rb"))
+#panel_dnn.save('dnn_301_tf.h5')
 
 def mask_outside_limits(prediction_array):
     """ Constrain the predictions to true proportions (between 0 and 1).
