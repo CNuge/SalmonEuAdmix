@@ -3,7 +3,7 @@
 
 Despite never being approved for commercial use in Canada, there is growing evidence of genetic information from European Atlantic salmon entering into both North American aquaculture stocks, with aquaculture escapees subsequently introducing this information into wild populations.  Understanding the extent of European genetic introgression and the impacts it has on wild salmon populations relies on the characterization of European admixture proportions. Obtaining this information using large SNP panels or microsatellite markers can be expensive, analytically intensive, and relies on the inclusion of numerous North American and European individuals to serve as baselines for subsequent analyses.
 
-`SalmonEuAdmix` is a program designed to streamline the admixture estimation process. It allows for European admixture proporions to be accurately estimated from a parsimonious set of SNP markers. Relying exlusively on the genotypes for the set of SNPs used as input, `SalmonEuAdmix` can predict admixture proporions for novel samples. The program utilizes a machine-learning model trained on pairs of genotypes and admixture proportions for 5812 individuals encompassing a mixture of wild and aquaculture fish of European, North American, and mixed ancestry. The model has been experimentally shown to predict admixture proportions that conform to the estimations provided by a complete admixture analysis with greater than 98% accuracy.
+`SalmonEuAdmix` is a program designed to streamline the admixture estimation process. It allows for European admixture proportions  to be accurately estimated from a parsimonious set of SNP markers. Relying exclusively on the genotypes for the set of SNPs used as input, `SalmonEuAdmix` can predict admixture proportions for novel samples. The program utilizes a machine-learning model trained on pairs of genotypes and admixture proportions for 5812 individuals encompassing a mixture of wild and aquaculture fish of European, North American, and mixed ancestry. The model has been experimentally shown to predict admixture proportions that conform to the estimations provided by a complete admixture analysis with greater than 98% accuracy.
 
 
 ### How does SalmonEuAdmix work?
@@ -12,11 +12,11 @@ A run of `SalmonEuAdmix` is invoked via a command line interface. The following 
 
 1. The program reads a ped and map file.
     - These data files are standard Plink file formats for storing SNP genotype information. More information on them can be found [on the Plink website](https://www.cog-genomics.org/plink/1.9/formats#ped).
-	- Your input is permitted to include more SNPs than those required by the model. If there are more SNPs than the panel, the program subsets just the required SNPs and ignores the others.
+	- Your input is permitted to include more SNPs than those required by the model. If there are more SNPs than the selected panel (513-SNP or 301-SNP), the program subsets just the required SNPs and ignores the others.
 2. The program encodes the SNPs for the machine learning model in dosage format.
 	- i.e. `AA AT TT` -> `0 1 2`
 	- To do this, it uses a stored data structure to ensure the major and minor allele encoding are consistent with the data that were used in training.
-3. A Deep neural network trained to predict European Admixture percentage (it has been shown to be about 99% accurate relative to running a complete from scratch) is loaded and used to make predictions.
+3. A Deep neural network trained to predict European Admixture percentage is loaded and used to make predictions. (The models have been shown to be about 99% accurate relative to running a complete amdixture run with the same SNPs for ~7000 baseline individuals, you get to skip that part!) 
 5. The predictions are output to a tab separated file that is ready for excel/R/human inspection.
 
 
@@ -47,7 +47,7 @@ pip install -e .
 
 # 3. check the package works by calling the help menu
 SalmonEuAdmix -h 
-# you should get a command line output listing the CLI options
+# you should get a command line output listing the options
 
 # 4. You're good to start using SalmonEuAdmix
 ```
@@ -56,14 +56,14 @@ SalmonEuAdmix -h
 ### Command line interface
 
 Example input files can be found in the subfolder `SalmonEuAdmix/data/`
-The following command will read in the `panel_513_data.ped` and `panel_513_data.map` files, run the admixture prediction pipeline, and then output the predicted european admixture proportions for each individual in a file named `example_output.tsv`.
+The following command will read in the `panel_513_data.ped` and `panel_513_data.map` files, run the admixture prediction pipeline, and then output the predicted European admixture proportions for each individual in a file named `example_output.tsv`.
 
 ```
 SalmonEuAdmix -p panel_513_data.ped -m panel_513_data.map -o example_output.tsv
 
 ```
 
-The ped (`-p`) and map files (`-m`) are obtained from [plink](https://www.cog-genomics.org/plink/). Note you will more than likely want to use plink or some associated methods to do some pre-processing: filtering for genoltype quality, missing data, *etc.*. The 513 SNPs of the panel must all be present in the file, additional marker columns are allowed, and these will simply be filtered out prior to the encoding step.
+The ped (`-p`) and map files (`-m`) are obtained from [plink](https://www.cog-genomics.org/plink/). Note you will more than likely want to use plink or some associated methods to do some pre-processing: filtering for genotype quality, missing data, *etc.*. The 513 SNPs of the panel must all be present in the file, additional marker columns are allowed, and these will simply be filtered out prior to the encoding step.
 
 To see the list of required SNPs, you can look in the example .map file:
 `SalmonEuAdmix/data/panel_513_data.map`
@@ -77,7 +77,7 @@ panel_snps    # this is a list of the 513 markers in the panel used by the predi
 SalmonEuAdmix can handle low levels of missing information, the modal genotype from the training data will be imputed to fill in missing data. You should explore your data to get a sense of the amount of missing values.
 
 ### Model selection
-`SalmonEuAdmix` gives you a choice of two neural networks that take different sized inputs. By default the 513 SNP model is used, by changing the `--neuralnetwork` flag, you can select between the `301_model` and the `513_model`. The 301_model uses a smaller panel of SNPs (all 301 markers are in the 513-SNP panel). If individuals were genotyped for all 513 markers, then the `513_model` will be marginally more accurate in its predictions. The 301 panel should therefore be used only if samples were genotyped for only the SNPs in the smaller 301-SNP panel.
+`SalmonEuAdmix` gives you a choice of two neural networks that take different sized inputs. By default, the 513-SNP model is used, by changing the `--neuralnetwork` flag, you can select between the `301_model` and the `513_model`. The 301_model uses a smaller panel of SNPs (all 301 markers are in the 513-SNP panel). If individuals were genotyped for all 513 markers, then the `513_model` will be marginally more accurate in its predictions. The 301 panel should therefore be used only if samples were genotyped for only the SNPs in the smaller 301-SNP panel.
 
 You can view the list of the 301-SNP markers from by running the following from within Python:
 
