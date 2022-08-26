@@ -52,4 +52,11 @@ SalmonEuAdmix -h
 #can check to see if functions available with:
 from SalmonEuAdmix.encode import encode_ped
 ?encode_ped
+
+
+Systems I've tested the install and a small demo run on:
+- Linux, Ubuntu 18.04.4, python 3.8.5 (in a virtual environment)
+	- all model situations worked as expected.
+- 
+
 """
