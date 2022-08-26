@@ -64,7 +64,6 @@ This shoud install the python package and make the command line tool available o
 SalmonEuAdmix -h 
 ```
 From that command you should get an output listing the program's options. From there you're good to start using SalmonEuAdmix!
-```
 
 ## Usage 
 ### Command line interface
