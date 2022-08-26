@@ -41,6 +41,7 @@ git clone git@github.com:CNuge/SalmonEuAdmix.git
 #alternatively, you can download and unzip the repository
 
 #2. enter the SalmonEuAdmix repository folder and run:
+cd SalmonEuAdmix
 pip install -e .
 #this shoud install the python package and make the command line tool available on your system
 
