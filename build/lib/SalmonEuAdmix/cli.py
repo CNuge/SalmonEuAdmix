@@ -15,8 +15,7 @@ def input_parser(args):
         a command line tool for estimating European admixture proportions in Atlantic salmon.
         """)
     parser.add_argument("-p", "--ped", type = str,  
-        help = "The ped file of genotypes for individuals to predict.\n"+\
-        "ped: '.ped'\n")
+        help = "The ped file of genotypes for individuals to predict.")
     parser.add_argument("-m", "--map", type = str,
         help = "The map file corresponding to the ped file.")
     parser.add_argument("-o", "--out", type = str , default = "admix_pred.tsv", 

@@ -1,6 +1,7 @@
 import os
 import pickle
 
+from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
 
@@ -59,8 +60,8 @@ def load_y_scaler():
 def load_dnn():
     """Load the tensorflow lite version of the model."""
     location = os.path.dirname(os.path.realpath(__file__))
-    dnn_file = os.path.join(location, 'data', 'DNNregressor_model_v1')
-    panel_dnn = pickle.load(open(dnn_file, "rb"))
+    dnn_file = os.path.join(location, 'data', 'dnn_513_tf')
+    panel_dnn = keras.models.load_model(dnn_file)    
     return panel_dnn
 
 
@@ -84,8 +85,8 @@ def load_301_y_scaler():
 def load_301_dnn():
     """Load the tensorflow lite version of the model."""
     location = os.path.dirname(os.path.realpath(__file__))
-    dnn_file = os.path.join(location, 'data', 'DNNregressor_model_v4')
-    panel_dnn = pickle.load(open(dnn_file, "rb"))
+    dnn_file = os.path.join(location, 'data', 'dnn_301_tf')
+    panel_dnn = keras.models.load_model(dnn_file)    
     return panel_dnn
 
 

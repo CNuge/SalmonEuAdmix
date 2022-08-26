@@ -1,9 +1,5 @@
 from setuptools import setup, find_packages
 
-with open('requirements.txt') as f:
-	requirements = f.readlines()
-	requirements = [x.rstrip() for x in requirements]
-
 long_description = """
 SalmonEuAdmix: a machine learning-based library for estimating European admixture proportions in Atlantic salmon. 
 
@@ -21,7 +17,7 @@ estimations provided by a complete admixture analysis with greater than 98 perce
 
 setup(
 	name = 'SalmonEuAdmix',
-	version = '1.0.0',
+	version = '1.0.3',
 	author = 'Cam Nugent',
 	author_email = 'Cameron.Nugent@dfo-mpo.gc.ca',
 	url = 'https://github.com/CNuge/SalmonEuAdmix',
@@ -35,7 +31,11 @@ setup(
 	'SalmonEuAdmix = SalmonEuAdmix.cli:main']
 	},
 	python_requires='>=3.9.7',
-	install_requires = requirements,
+	install_requires = ["numpy>=1.20.3",
+						"pandas>=1.3.4",
+						"tensorflow>=2.8.0",
+						"scikit-learn>=0.24.2",
+						"pytest==6.2.4"]
 
 	)
 
