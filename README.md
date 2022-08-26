@@ -24,7 +24,6 @@ A run of `SalmonEuAdmix` is invoked via a command line interface. The following 
 ## Installation
 
 To set up `SalmonEuAdmix`, clone this repository, and then from within the folder run the following commands:
-
 ```
 # create the release:
 python setup.py sdist
@@ -32,7 +31,8 @@ python setup.py sdist
 python3 setup.py install
 
 # then check if the package works by calling the help menu
-SalmonEuAdmix -h
+SalmonEuAdmix -h 
+#you should get a command line output listing the CLI options
 ```
 
 ## Usage 
