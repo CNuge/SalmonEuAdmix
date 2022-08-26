@@ -57,6 +57,12 @@ from SalmonEuAdmix.encode import encode_ped
 Systems I've tested the install and a small demo run on:
 - Linux, Ubuntu 18.04.4, python 3.8.5 (in a virtual environment)
 	- all model situations worked as expected.
-- 
+- Compute Canada VM, Linux, python 3.8.10 (in a virtual environment)
+	- all model situations worked as expected.
+	- needed to install cython on compute canada, think this is a .whl nuance for them
+- Windows 11, windows subsystem for linux
+	- native environment for the package
+- Windows 11, powershell
+	- works, needed to change the model save from pkl to native tf format, but all is well now.
 
 """
