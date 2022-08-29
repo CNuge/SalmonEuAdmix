@@ -25,18 +25,7 @@ A run of `SalmonEuAdmix` is invoked via a command line interface. The following 
 
 `SalmonEuAdmix` is a Python3 program, to use it you will need to have [Python3](https://www.python.org/downloads/) installed on your computer. 
 
-### Optional setup
-It is recommended, though not required, that you use a [virtual environment](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment) to install and run `SalmonEuAdmix` from GitHub.
 
-```
-# from the command line, make a virtual environment named 'Env'
-python3 -m venv Env
-# activate the environment
-source Env/bin/activate
-# now you can do the install and run SalmonEuAdmix
-# when you're done, deactivate the environment with the command
-deactivate
-```
 
 ### Install version via pip
 SalmonEuAdmix is available on [pypi](https://pypi.org/project/SalmonEuAdmix/) and can be installed via Python's package installer pip.
@@ -49,6 +38,18 @@ SalmonEuAdmix -h
 ```
 
 ### Install development version from GitHub
+
+It is recommended, though not required, that you use a [virtual environment](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment) to install and run `SalmonEuAdmix` from GitHub.
+
+```
+# from the command line, make a virtual environment named 'Env'
+python3 -m venv Env
+# activate the environment
+source Env/bin/activate
+# now you can do the install and run SalmonEuAdmix
+# when you're done, deactivate the environment with the command
+deactivate
+```
 
 To set up and install `SalmonEuAdmix` from Github, clone this repository (alternatively, you can download and unzip it). 
 ```
