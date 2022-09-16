@@ -25,31 +25,65 @@ A run of `SalmonEuAdmix` is invoked via a command line interface. The following 
 
 `SalmonEuAdmix` is a Python3 program, to use it you will need to have [Python3](https://www.python.org/downloads/) installed on your computer. 
 
+### A note on your programming environment
+It is recommended, though not required, that you use a [virtual environment](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment) to install and run `SalmonEuAdmix`. Using a virtual environment allows you to avoid installing Python packages globally which could break system tools or other projects. 
 
-
-### Install version via pip
-SalmonEuAdmix is available on [pypi](https://pypi.org/project/SalmonEuAdmix/) and can be installed via Python's package installer pip.
+Setting up a virtual environment on Linux or macOS:
 ```
-#from the command line, simply run
+# you can install virtualenv using pip
+pip install virtualenv
+
+# from the command line, make a virtual environment named 'Env'
+python3 -m venv Env
+
+# activate the environment
+source Env/bin/activate
+
+# now you can install and run SalmonEuAdmix without affecting other projects
+
+# when you're done, deactivate the environment with the command
+deactivate
+```
+
+Setting up a virtual environment on Windows:
+```
+# you can install virtualenv using pip
+py -m pip install --user virtualenv
+
+# from PowerShell, make a virtual environment named 'Env'
+py -m venv Env
+#activate the environment 
+.\Env\Scripts\activate
+
+# now you can install and run SalmonEuAdmix without affecting other projects
+
+# when you're done, deactivate the environment with the command
+deactivate
+```
+
+### Linux and macOS - Install via pip
+
+SalmonEuAdmix is available on [pypi](https://pypi.org/project/SalmonEuAdmix/) and can be installed from the terminal using Python's package installer pip.
+```
+# from terminal, run the command:
 pip install SalmonEuAdmix
 # check that the installation was successful by calling the help menu
 SalmonEuAdmix -h 
 
 ```
 
+### Windows - Install via pip
+
+Installing on windows requires a slightly different syntax. The following commands will let you install `SalmonEuAdmix` using PowerShell.
+```
+# from PowerShell, run the command:
+py -m pip install SalmonEuAdmix
+
+# check that the installation was successful by calling the help menu
+SalmonEuAdmix -h
+```
+
 ### Install development version from GitHub
-
-It is recommended, though not required, that you use a [virtual environment](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment) to install and run `SalmonEuAdmix` from GitHub.
-
-```
-# from the command line, make a virtual environment named 'Env'
-python3 -m venv Env
-# activate the environment
-source Env/bin/activate
-# now you can do the install and run SalmonEuAdmix
-# when you're done, deactivate the environment with the command
-deactivate
-```
 
 To set up and install `SalmonEuAdmix` from Github, clone this repository (alternatively, you can download and unzip it). 
 ```
