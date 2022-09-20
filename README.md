@@ -12,13 +12,12 @@ A run of `SalmonEuAdmix` is invoked via a command line interface. The following 
 
 1. The program reads a ped and map file.
     - These data files are standard Plink file formats for storing SNP genotype information. More information on them can be found [on the Plink website](https://www.cog-genomics.org/plink/1.9/formats#ped).
-	- Your input is permitted to include more SNPs than those required by the model. If there are more SNPs than the selected panel (513-SNP or 301-SNP), the program subsets just the required SNPs and ignores the others.
+	- Your input is permitted to include more SNPs than those required by the model. If there are more SNPs than the selected panel (301-SNP panel is default, larger 513-SNP can be optionally employed), the program subsets just the required SNPs and ignores the others.
 2. The program encodes the SNPs for the machine learning model in dosage format.
 	- i.e. `AA AT TT` -> `0 1 2`
 	- To do this, it uses a stored data structure to ensure the major and minor allele encoding are consistent with the data that were used in training.
 3. A Deep neural network trained to predict European Admixture percentage is loaded and used to make predictions. (The models have been shown to be about 99% accurate relative to running a complete amdixture run with the same SNPs for ~7000 baseline individuals, you get to skip that part!) 
 5. The predictions are output to a tab separated file that is ready for excel/R/human inspection.
-
 
 
 ## Installation
@@ -104,39 +103,39 @@ From that command you should get an output listing the program's options. From t
 ### Command line interface
 
 Example input files can be found in the subfolder `SalmonEuAdmix/data/`
-The following command will read in the `panel_513_data.ped` and `panel_513_data.map` files, run the admixture prediction pipeline, and then output the predicted European admixture proportions for each individual in a file named `example_output.tsv`.
+The following command will read in the `panel_301_data.ped` and `panel_301_data.map` files, run the admixture prediction pipeline, and then output the predicted European admixture proportions for each individual in a file named `example_output.tsv`.
 
 ```
-SalmonEuAdmix -p panel_513_data.ped -m panel_513_data.map -o example_output.tsv
+SalmonEuAdmix -p panel_301_data.ped -m panel_301_data.map -o example_output.tsv
 
 ```
 
-The ped (`-p`) and map files (`-m`) are obtained from [plink](https://www.cog-genomics.org/plink/). Note you will more than likely want to use plink or some associated methods to do some pre-processing: filtering for genotype quality, missing data, *etc.*. The 513 SNPs of the panel must all be present in the file, additional marker columns are allowed, and these will simply be filtered out prior to the encoding step.
+The ped (`-p`) and map files (`-m`) are obtained from [plink](https://www.cog-genomics.org/plink/). Note you will more than likely want to use plink or some associated methods to do some pre-processing: filtering for genotype quality, missing data, *etc.*. The 301 SNPs of the panel must all be present in the file, additional marker columns are allowed, and these will simply be filtered out prior to the encoding step.
 
 To see the list of required SNPs, you can look in the example .map file:
-`SalmonEuAdmix/data/panel_513_data.map`
+`SalmonEuAdmix/data/panel_301_data.map`
 
 You can also view the list of markers from within Python by running the following:
 ```
 from SalmonEuAdmix import panel_snps
-panel_snps    # this is a list of the 513 markers in the panel used by the predictive model. All must be present in the input.
+panel_snps    # this is a list of the 301 markers in the panel used by the predictive model. All must be present in the input.
 ```
 
 SalmonEuAdmix can handle low levels of missing information, the modal genotype from the training data will be imputed to fill in missing data. You should explore your data to get a sense of the amount of missing values.
 
 ### Model selection
-`SalmonEuAdmix` gives you a choice of two neural networks that take different sized inputs. By default, the 513-SNP model is used, by changing the `--neuralnetwork` flag, you can select between the `301_model` and the `513_model`. The 301_model uses a smaller panel of SNPs (all 301 markers are in the 513-SNP panel). If individuals were genotyped for all 513 markers, then the `513_model` will be marginally more accurate in its predictions. The 301 panel should therefore be used only if samples were genotyped for only the SNPs in the smaller 301-SNP panel.
+`SalmonEuAdmix` gives you a choice of two neural networks that take different sized inputs. By default, the 301-SNP model is used, by changing the `--neuralnetwork` flag, you can select between the `301_model` and the `513_model`. The 513_model uses a larger panel of SNPs (all 301 markers are in the 513-SNP panel). If individuals were genotyped for all 513 markers, then the `513_model` will be marginally more accurate in its predictions. 
 
-You can view the list of the 301-SNP markers from by running the following from within Python:
+You can view the list of the larger 513-SNP markers from by running the following from within Python:
 
 ```
 from SalmonEuAdmix import reduced_panel_snps
-reduced_panel_snps    # this is the list of the 301 markers in the reduced panel used by the 301-SNP predictive model.
-# All 301 SNPs must be present in the input PED file.
+reduced_panel_snps    # this is the list of the 513 markers in the reduced panel used by the 513-SNP predictive model.
+# All 513 SNPs must be present in the input PED file.
 ```
 
-Below is an example call using the reduced 301-SNP model (files can be found in the subfolder `SalmonEuAdmix/data/`).
+Below is an example call using the larger 513-SNP model (files can be found in the subfolder `SalmonEuAdmix/data/`).
 ```
-SalmonEuAdmix -p panel_301_data.ped -m panel_301_data.map -o 301_model_predictions.tsv -n 301_model
+SalmonEuAdmix -p panel_513_data.ped -m panel_513_data.map -o 513_model_predictions.tsv -n 513_model
 ```
 

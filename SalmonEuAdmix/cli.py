@@ -23,14 +23,14 @@ def input_parser(args):
     parser.add_argument("-c", "--constrain", type = bool , default = True, 
         help = "Boolean indicating if program should constrain the predicted proportions\n"+\
             "to lower bound of 0.0 and upper bound of 1.0. Default is True.")
-    parser.add_argument("-n", "--neuralnetwork", type = str , default = '513_model', 
+    parser.add_argument("-n", "--neuralnetwork", type = str , default = '301_model', 
         help = "String indicating which predictive model (deep neural network)\n"+\
             "should be used to make the admixture predictions.\n"+\
             "Two options are available: \n"+\
-            "'513_model' - indicates the 513 SNP model should be used.\n"+\
             "'301_model' - indicates the 301 SNP model should be used.\n"+\
+            "'513_model' - indicates the 513 SNP model should be used.\n"+\
             "\n"+\
-            "Default is the larger 513 SNP model.")
+            "Default is the smaller 301-SNP model.")
 
     return parser.parse_args(args)
 
