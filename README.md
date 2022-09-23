@@ -16,7 +16,7 @@ A run of `SalmonEuAdmix` is invoked via a command line interface. The following 
 2. The program encodes the SNPs for the machine learning model in dosage format.
 	- i.e. `AA AT TT` -> `0 1 2`
 	- To do this, it uses a stored data structure to ensure the major and minor allele encoding are consistent with the data that were used in training.
-3. A Deep neural network trained to predict European Admixture percentage is loaded and used to make predictions. (The models have been shown to be about 99% accurate relative to running a complete amdixture run with the same SNPs for ~7000 baseline individuals, you get to skip that part!) 
+3. A Deep neural network trained to predict European Admixture percentage is loaded and used to make predictions. (The models have been shown to be about 99% accurate relative to running a complete admixture run with the same SNPs for ~7000 baseline individuals, you get to skip that part!) 
 5. The predictions are output to a tab separated file that is ready for excel/R/human inspection.
 
 
@@ -102,8 +102,9 @@ From that command you should get an output listing the program's options. From t
 ## Usage 
 ### Command line interface
 
-Example input files can be found in the subfolder `SalmonEuAdmix/data/`
-The following command will read in the `panel_301_data.ped` and `panel_301_data.map` files, run the admixture prediction pipeline, and then output the predicted European admixture proportions for each individual in a file named `example_output.tsv`.
+Example input files can be found in the subfolder `SalmonEuAdmix/data/`. You can make a copy of these to test the package.
+
+The following command will read in the files `panel_301_data.ped` and `panel_301_data.map` (from your current working directory), run the admixture prediction pipeline, and then output the predicted European admixture proportions for each individual in a file named `example_output.tsv`. If not in your working directory, you can specify the path for the inputs or desired output file location.
 
 ```
 SalmonEuAdmix -p panel_301_data.ped -m panel_301_data.map -o example_output.tsv
