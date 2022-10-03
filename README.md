@@ -86,7 +86,9 @@ SalmonEuAdmix -h
 
 To set up and install `SalmonEuAdmix` from Github, clone this repository (alternatively, you can download and unzip it). 
 ```
-git clone git@github.com:CNuge/SalmonEuAdmix.git
+git clone https://github.com/CNuge/SalmonEuAdmix.git
+#or if you have your github ssh setup
+#git clone git@github.com:CNuge/SalmonEuAdmix.git
 ```
 
 Then from within the SalmonEuAdmix repository run: 
@@ -116,7 +118,7 @@ The ped (`-p`) and map files (`-m`) are obtained from [plink](https://www.cog-ge
 To see the list of required SNPs, you can look in the example .map file:
 `SalmonEuAdmix/data/panel_301_data.map`
 
-You can also view the list of markers from within Python by running the following:
+You can also view the list of markers from within an interactive Python environment by running the following:
 ```
 from SalmonEuAdmix import panel_snps
 panel_snps    # this is a list of the 301 markers in the panel used by the predictive model. All must be present in the input.
