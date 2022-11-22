@@ -126,8 +126,8 @@ panel_snps    # this is a list of the 301 markers in the panel used by the predi
 
 SalmonEuAdmix can handle low levels of missing information, the modal genotype from the training data will be imputed to fill in missing data. You should explore your data to get a sense of the amount of missing values.
 
-### Model selection
-`SalmonEuAdmix` gives you a choice of two neural networks that take different sized inputs. By default, the 301-SNP model is used, by changing the `--neuralnetwork` flag, you can select between the `301_model` and the `513_model`. The 513_model uses a larger panel of SNPs (all 301 markers are in the 513-SNP panel). If individuals were genotyped for all 513 markers, then the `513_model` will be marginally more accurate in its predictions. 
+### Alternative model selection
+`SalmonEuAdmix` gives you a choice of an additional, larger, neural network for admixture prediction. By default, the 301-SNP model is used, by changing the `--neuralnetwork` flag, you can select between the `301_model` and the `513_model`. The 513_model uses a larger panel of SNPs (all 301 markers are in the 513-SNP panel). If individuals were genotyped for all 513 markers, then the `513_model` will be marginally more accurate in its predictions. 
 
 You can view the list of the larger 513-SNP markers from by running the following from within Python:
 
