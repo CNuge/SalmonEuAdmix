@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from SalmonEuAdmix import allele_info, panel_snps, mode_gts
+from SalmonEuAdmix import allele_info, panel_snps, reduced_panel_snps, mode_gts
 from SalmonEuAdmix.encode import readPedMap_tsv_fmt, subset_snp_df, encode_ped, dosage_encode_snps
 
 
@@ -17,7 +17,7 @@ def test_AlleleInfo():
 def test_PedMapReadAndTrim():
     """Test that the data are read in, and the marker panels are pulled and used.
     """
-   # the example files with only the essential data columns
+    # the example files with only the essential data columns
     std_ped_file = 'SalmonEuAdmix/data/panel_513_data.ped'
     std_map_file = 'SalmonEuAdmix/data/panel_513_data.map'
     # read in the data
@@ -41,6 +41,21 @@ def test_PedMapReadAndTrim():
     with_header_extra_snp_data_513gts = subset_snp_df(extra_snp_data, panel_snps, leading_cols = True)
     assert with_header_extra_snp_data_513gts.shape == (20, 519)
 
+
+def test_PedMapAllSpacesFormat():
+    """Test that when columns and genotypes have the same delimited, 
+        the data are read in and processed properly.
+    """
+    # the example files with superfluous and essential data columns
+    # where the data are completely whitespace delimited
+    space_ped_file = 'SalmonEuAdmix/data/unit_test3.ped'
+    space_map_file = 'SalmonEuAdmix/data/unit_test3.map'
+    # read in the data
+    space_snp_data, space_snp_columns = readPedMap_tsv_fmt(space_ped_file, space_map_file)
+    assert space_snp_data.shape ==  (20, 533)
+    assert len(space_snp_columns) > 301
+    extra_snp_data_301gts = subset_snp_df(space_snp_data, reduced_panel_snps)
+    assert extra_snp_data_301gts.shape == (20, 301)
 
 def test_ReadAndEncode():
     """Test the encoding of the data frame

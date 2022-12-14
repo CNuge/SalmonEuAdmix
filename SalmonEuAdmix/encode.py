@@ -1,7 +1,8 @@
 import numpy as np
 import pandas as pd
 
-from SalmonEuAdmix import panel_snps
+from SalmonEuAdmix import panel_snps, reduced_panel_snps
+
 
 def readPedMap_tsv_fmt(ped_file, map_file, headers = False):
     """Read in a ped and map file and build a pandas DataFrame.
@@ -18,23 +19,37 @@ def readPedMap_tsv_fmt(ped_file, map_file, headers = False):
     col_names = ["chromosome", "snp" , "genetic_distance", "physical_distance"]
     if headers == True:
         #read in the map file
-        map_data = pd.read_csv(map_file, skiprows = 0, names = col_names, sep = '\t')
-        #build the complete column name list        
-        header_data = ['#family', 'individual', 'sire', 'dam', 'sex', 'pheno']
-        snp_columns = list(map_data['snp'].values)
-        header_data.extend(snp_columns)
-        #read in the ped file and apply the headers
-        snp_data = pd.read_csv(ped_file, skiprows = 0, names = header_data, sep = '\t')
-        return snp_data, snp_columns        
-    else:
-        #read in the map file
-        map_data = pd.read_csv(map_file, names = col_names, sep = '\t')
+        map_data = pd.read_csv(map_file, skiprows = 0, names = col_names, delim_whitespace=True)
         #build the complete column name list
         header_data = ['#family', 'individual', 'sire', 'dam', 'sex', 'pheno']
         snp_columns = list(map_data['snp'].values)
-        header_data.extend(snp_columns)
         #read in the ped file and apply the headers
-        snp_data = pd.read_csv(ped_file, names = header_data, sep = '\t')
+        snp_data = pd.read_csv(ped_file, skiprows = 0, header = None, delim_whitespace=True)
+        #split the metadata columns from the front
+        leading_cols = snp_data.loc[:, :5].set_axis(header_data, axis=1, inplace=False)
+        #merge the two genotypes into a single space delimited column each
+        gt_snp_data = pd.DataFrame(snp_data.loc[:, 6::2].astype(str).values + 
+                                        ' ' +  snp_data.loc[:, 7::2].astype(str).values, 
+                                    index=snp_data.index, columns=snp_columns)
+        #join the leading columns to the snp columns and return
+        snp_data = pd.concat([leading_cols, gt_snp_data], axis=1)
+        return snp_data, snp_columns
+    else:
+        #read in the map file
+        map_data = pd.read_csv(map_file, names = col_names, delim_whitespace=True)
+        #build the complete column name list
+        header_data = ['#family', 'individual', 'sire', 'dam', 'sex', 'pheno']
+        snp_columns = list(map_data['snp'].values)
+        #read in the ped file and apply the headers
+        snp_data = pd.read_csv(ped_file, header = None, delim_whitespace=True)
+        #split the metadata columns from the front
+        leading_cols = snp_data.loc[:, :5].set_axis(header_data, axis=1, inplace=False)
+        #merge the two genotypes into a single space delimited column each
+        gt_snp_data = pd.DataFrame(snp_data.loc[:, 6::2].astype(str).values + 
+                                        ' ' + snp_data.loc[:, 7::2].astype(str).values, 
+                                    index=snp_data.index, columns=snp_columns)
+        #join the leading columns to the snp columns and return
+        snp_data = pd.concat([leading_cols, gt_snp_data], axis=1)
         return snp_data, snp_columns
   
 
@@ -231,12 +246,12 @@ def subset_snp_df(snp_df, subset_list, leading_cols = False):
                            " ensure that all required SNPs are present.")
 
 
-def get_model_inputs(df, x_cols = panel_snps, y_col = None, x_scaler = None, y_scaler = None):
+def get_model_inputs(df, x_cols = reduced_panel_snps, y_col = None, x_scaler = None, y_scaler = None):
     """_summary_
 
     Args:
         df (_type_): _description_
-        x_cols (_type_, optional): _description_. Defaults to panel_snps.
+        x_cols (_type_, optional): _description_. Defaults to reduced_panel_snps.
         y_col (_type_, optional): _description_. Defaults to None.
         x_scaler (_type_, optional): _description_. Defaults to None.
         y_scaler (_type_, optional): _description_. Defaults to None.
@@ -259,3 +274,8 @@ def get_model_inputs(df, x_cols = panel_snps, y_col = None, x_scaler = None, y_s
             y_out = y_scaler.transform(np.expand_dims(y_out, axis=1))
             y_out = np.squeeze(y_out)
     return x_out, y_out
+
+
+
+
+
