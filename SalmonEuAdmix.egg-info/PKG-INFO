@@ -6,6 +6,7 @@ Home-page: https://github.com/CNuge/SalmonEuAdmix
 Author: Cam Nugent
 Author-email: Cameron.Nugent@dfo-mpo.gc.ca
 License: LICENSE.md
+Platform: UNKNOWN
 Requires-Python: >=3.9.7
 License-File: LICENCE.md
 
@@ -21,3 +22,5 @@ admixture proportions for 5812 individuals encompassing a mixture of wild and
 aquaculture fish of European, North American, and mixed ancestry. The model has 
 been experimentally show to predict admixture proportions that conform to the 
 estimations provided by a complete admixture analysis with greater than 98 percent accuracy.
+
+

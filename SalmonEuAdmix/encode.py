@@ -280,6 +280,3 @@ def get_model_inputs(df, x_cols = reduced_panel_snps, y_col = None, x_scaler = N
     return x_out, y_out
 
 
-
-
-

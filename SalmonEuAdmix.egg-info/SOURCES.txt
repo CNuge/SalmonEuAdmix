@@ -24,5 +24,7 @@ SalmonEuAdmix/data/panel_513_data.ped
 SalmonEuAdmix/data/reduced_marker_list.pkl
 SalmonEuAdmix/data/unit_test2.map
 SalmonEuAdmix/data/unit_test2.ped
+SalmonEuAdmix/data/unit_test3.map
+SalmonEuAdmix/data/unit_test3.ped
 SalmonEuAdmix/data/y_scaler_v1
 SalmonEuAdmix/data/y_scaler_v4
