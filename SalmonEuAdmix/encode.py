@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-from SalmonEuAdmix import panel_snps, reduced_panel_snps
+from SalmonEuAdmix import reduced_panel_snps
 
 
 def readPedMap_tsv_fmt(ped_file, map_file, headers = False):
@@ -57,14 +57,15 @@ def get_unique_alleles(gt_count_dict):
     """Determine the major and minor alleles for the given SNP marker.
 
     Args:
-        gt_count_dict (_type_): _description_
+        gt_count_dict (dict): A dictonary where the genotypes are the keys, 
+                                and their number of occurances are the values.
 
     Raises:
-        ValueError: _description_
-        ValueError: _description_
+        ValueError: Error if a SNP has more than 2 alleles. Biallelic SNPs only. 
+        ValueError: Error if a SNP has only one alleles. Monomorphic SNPs lack information. 
 
     Returns:
-        _type_: _description_
+        (str, str): The major and minor alleles.
     """
     unique_alleles = {}
     for x in gt_count_dict.keys():
@@ -87,13 +88,13 @@ def get_unique_alleles(gt_count_dict):
 def calc_mode(snp_arr):
     """Get the most common value in the array of SNP values. 
     
-    Used for imputing missing info.
+        Used for imputing missing info.
 
     Args:
-        snp_arr (_type_): _description_
+        snp_arr (np.array): An array of the SNP genotypes.
 
     Returns:
-        tuple: _description_
+        str: The most common genotype in the input array.
     """
 
     vals, counts = np.unique(snp_arr, return_counts=True)
@@ -120,7 +121,7 @@ def dosage_encode_snps(snp_arr, missing_val = "0 0", missing_replacement = None,
                     throw an error if more than two alleles are specified.
 
     Returns:
-        _type_: _description_
+        list: Dosage encoded SNP data for the input genotype array.
     """
     if missing_replacement is None:
         mode_gt = calc_mode(snp_arr)
@@ -222,12 +223,14 @@ def subset_snp_df(snp_df, subset_list, leading_cols = False):
     Option to include the header data (default = False).
 
     Args:
-        snp_df (_type_): _description_
-        subset_list (_type_): _description_
-        leading_cols (bool, optional): _description_. Defaults to False.
+        snp_df (pandas.DataFrame): A dataframe with the SNP information.
+        subset_list (list): A list with the SNP column names to retain.
+        leading_cols (bool, optional): Boolean indicating if the leading columns from a PED file be 
+                                        retained along with the specified SNP columns. 
+                                        Defaults to False.
 
     Returns:
-        _type_: _description_
+        pandas.DataFrame: The dataframe with only the SNP columns specified by the input subset_list.
     """
 
     if leading_cols == False:
@@ -247,17 +250,18 @@ def subset_snp_df(snp_df, subset_list, leading_cols = False):
 
 
 def get_model_inputs(df, x_cols = reduced_panel_snps, y_col = None, x_scaler = None, y_scaler = None):
-    """_summary_
+    """Subset the specified X and y columns from a pandas dataframe and conver to format
+        required by the machine learning algorithms.
 
     Args:
-        df (_type_): _description_
-        x_cols (_type_, optional): _description_. Defaults to reduced_panel_snps.
-        y_col (_type_, optional): _description_. Defaults to None.
-        x_scaler (_type_, optional): _description_. Defaults to None.
-        y_scaler (_type_, optional): _description_. Defaults to None.
+        df (pandas.dataframe): A dataframe with the specified columns.
+        x_cols (list, optional): The list of X columns to subset. Defaults to reduced_panel_snps.
+        y_col (str, optional): The name of the y column to subset. Defaults to None.
+        x_scaler (sklearn.StandardScaler, optional): A scaler to modify X the inputs. Defaults to None.
+        y_scaler (sklearn.StandardScaler, optional): A scaler to modify y the inputs. Defaults to None.
 
     Returns:
-        _type_: _description_
+        (np.array, np.array): Numpy arrays with the X and y data to pass to the neural network.
     """    
     #get the x values
     x_out = np.array(list(df[x_cols].values))
