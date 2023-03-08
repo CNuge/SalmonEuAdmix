@@ -142,3 +142,9 @@ Below is an example call using the larger 513-SNP model (files can be found in t
 SalmonEuAdmix -p panel_513_data.ped -m panel_513_data.map -o 513_model_predictions.tsv -n 513_model
 ```
 
+## Citation
+
+Nugent CM, Kess T, Brachmann MK, Langille BL, Holborn MK, Beck SV, Smith N, Duffy S, Lehnert SJ, Wringe B, Bentzen P. Genomic and machine learning-based screening of aquaculture associated introgression into at-risk wild North American Atlantic salmon (Salmo salar) populations. bioRxiv. 2022:2022-11.
+
+DOI: https://doi.org/10.1101/2022.11.23.517511
+
