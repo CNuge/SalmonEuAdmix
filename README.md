@@ -13,6 +13,7 @@ A run of `SalmonEuAdmix` is invoked via a command line interface. The following 
 1. The program reads a ped and map file.
     - These data files are standard Plink file formats for storing SNP genotype information. More information on them can be found [on the Plink website](https://www.cog-genomics.org/plink/1.9/formats#ped).
 	- Your input is permitted to include more SNPs than those required by the model. If there are more SNPs than the selected panel (301-SNP panel is default, larger 513-SNP can be optionally employed), the program subsets just the required SNPs and ignores the others.
+	- Note that your ped file *must* have SNPs encoded in nucleotide format ("A T", "G C", *e.t.c*). Generic encodings (*i.e.* "0 0"/"0 1"/"1 1", "A A"/"A B"/"B B") cannot be used. This is to ensure that the major and minor alleles are encoded properly for use in the neural network.
 2. The program encodes the SNPs for the machine learning model in dosage format.
 	- i.e. `AA AT TT` -> `0 1 2`
 	- To do this, it uses a stored data structure to ensure the major and minor allele encoding are consistent with the data that were used in training.
@@ -106,11 +107,10 @@ From that command you should get an output listing the program's options. From t
 
 Example input files can be found in the subfolder `SalmonEuAdmix/data/`. You can make a copy of these to test the package.
 
-The following command will read in the files `panel_301_data.ped` and `panel_301_data.map` (from your current working directory), run the admixture prediction pipeline, and then output the predicted European admixture proportions for each individual in a file named `example_output.tsv`. If not in your working directory, you can specify the path for the inputs or desired output file location.
+The following command will read in the files `panel_301_data.ped` and `panel_301_data.map` (from your current working directory), run the admixture prediction pipeline, and then output the predicted European admixture proportions for each individual in a file named `example_output.tsv`. If the input files are not in your working directory, you can specify the path to the files (you can also specify the output location).
 
 ```
 SalmonEuAdmix -p panel_301_data.ped -m panel_301_data.map -o example_output.tsv
-
 ```
 
 The ped (`-p`) and map files (`-m`) are obtained from [plink](https://www.cog-genomics.org/plink/). Note you will more than likely want to use plink or some associated methods to do some pre-processing: filtering for genotype quality, missing data, *etc.*. The 301 SNPs of the panel must all be present in the file, additional marker columns are allowed, and these will simply be filtered out prior to the encoding step.
